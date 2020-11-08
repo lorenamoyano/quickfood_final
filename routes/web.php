@@ -57,3 +57,5 @@ Route::get('/usuario/admin', [App\Http\Controllers\AdminController::class, 'admi
 Route::get('/profile/{id}' ,  [App\Http\Controllers\ClienteController::class, 'profile'])->name('profile');
 Route::post('/perfil' ,  [App\Http\Controllers\AdminController::class, 'perfil'])->name('perfil');
 Route::get('/borrar' ,  [App\Http\Controllers\AdminController::class, 'delete_user'])->name('delete');
+Route::get('/anadir' ,  [App\Http\Controllers\AdminController::class, 'anadir'])->name('anadir');
+Route::post('/add' ,  [App\Http\Controllers\AdminController::class, 'add_carta'])->name('add');
