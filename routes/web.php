@@ -59,3 +59,5 @@ Route::post('/perfil' ,  [App\Http\Controllers\AdminController::class, 'perfil']
 Route::get('/borrar' ,  [App\Http\Controllers\AdminController::class, 'delete_user'])->name('delete');
 Route::get('/anadir' ,  [App\Http\Controllers\AdminController::class, 'anadir'])->name('anadir');
 Route::post('/add' ,  [App\Http\Controllers\AdminController::class, 'add_carta'])->name('add');
+Route::get('/search1', [App\Http\Controllers\CartaController::class, 'index'])->name('search');
+Route::get('/autocomplete', [App\Http\Controllers\CartaController::class, 'autocomplete'])->name('autocomplete');

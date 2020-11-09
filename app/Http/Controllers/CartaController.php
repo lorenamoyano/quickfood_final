@@ -21,67 +21,27 @@ class CartaController extends Controller
      */
     public function ver()
     {
-        $carta = DB::table('carta')->simplePaginate(5);
+        $carta = DB::table('carta')->get();
         return view('carta.carta', ['carta' => $carta]);
     }
 
-    /**
-     * BUSCADOR DE LA CARTA
-     */
-    /*public function buscar($search = null)
+    public function index()
     {
-        if (empty($search)) {
-            $carta = Carta::orderBy('nombre')->simplePaginate(5);
-        } else {
-            $carta = Carta::orderBy('nombre')->where("nombre", 'LIKE', '%' . $search . '%')->simplePaginate(5);
-        }
-        return view('carta.carta', [
-            'carta' => $carta
-        ]);
-    }*/
-
-    //BUSCADOR
-
-    public function search1(Request $request)
-    {
-        if ($request->ajax()) {
-            $output = '';
-            $query = $request->get('query');
-            if ($query != '') {
-                $data = DB::table('carta')
-                    ->where('nombre', 'like', '%' . $query . '%')
-                    ->orderBy('id', 'asc')
-                    ->get();
-            } else {
-                $data = DB::table('carta')
-                    ->orderBy('id', 'asc')
-                    ->get();
-            }
-            $total_row = $data->count();
-            if ($total_row > 0) {
-                foreach ($data as $row) {
-                    $output .= '
-        <tr>
-         <td>' . $row->nombre . '</td>
-         <td>' . number_format($row->precio, 2) . '€' . '</td>
-         <td>' . $row->descripcion . '</td>
-        </tr>
-        ';
-                }
-            } else {
-                $output = '
-       <tr>
-        <td align="center" colspan="5">Sin resultados.</td>
-       </tr>
-       ';
-            }
-            $data = array(
-                'table_data'  => $output,
-
-            );
-
-            echo json_encode($data);
-        }
+        $carta = DB::table('carta')->get();
+        return view('carta.carta' , ['carta' => $carta]);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function autocomplete(Request $request)
+    {
+        $res = DB::table('carta')
+            ->where("nombre", "LIKE", "%{$request->term}%")
+            ->get();
+
+        return response()->json($res);
+    }
 }

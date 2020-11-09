@@ -12,6 +12,7 @@ use Spatie\Searchable\SearchResult;
 
 class Carta extends Model
 {
+    protected $guarded = [];
     protected $table = 'carta' ;
    // protected $primaryKey = 'id' ;
 

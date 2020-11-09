@@ -2,22 +2,33 @@
 
 namespace App\Http\Controllers;
 
-
-use Spatie\Searchable\Search;
-use App\Http\Controllers\Controller;
 use App\Models\Carta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AutoCompleteController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
-    {   
-        return view('carta.search');
-    }
-    public function search(Request $request)
     {
-        $posts=Carta::where('nombre',$request->keywords)->get();
-        return response()->json($posts);
-         
+        return view('carta.autocomplete-search');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function autocomplete(Request $request)
+    {
+        $res = DB::table('carta')
+            ->where("nombre", "LIKE", "%{$request->term}%")
+            ->get();
+
+        return response()->json($res);
     }
 }
