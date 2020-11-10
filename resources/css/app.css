@@ -1,3 +1,12 @@
 th , tbody {
     border: none;
 }
+
+
+/*.carta {
+    width: 230px;
+    white-space: nowrap;
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}*/

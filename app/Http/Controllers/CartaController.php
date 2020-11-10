@@ -44,4 +44,10 @@ class CartaController extends Controller
 
         return response()->json($res);
     }
+
+    public function product_show (Request $id) {
+        $producto = Carta::find($id);
+
+        return view('carta.product' , ['producto' => $producto]);
+    }
 }

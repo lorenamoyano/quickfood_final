@@ -61,3 +61,4 @@ Route::get('/anadir' ,  [App\Http\Controllers\AdminController::class, 'anadir'])
 Route::post('/add' ,  [App\Http\Controllers\AdminController::class, 'add_carta'])->name('add');
 Route::get('/search1', [App\Http\Controllers\CartaController::class, 'index'])->name('search');
 Route::get('/autocomplete', [App\Http\Controllers\CartaController::class, 'autocomplete'])->name('autocomplete');
+Route::get('/product', [App\Http\Controllers\CartaController::class, 'product_show'])->name('product');
