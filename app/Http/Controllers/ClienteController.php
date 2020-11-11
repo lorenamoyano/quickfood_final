@@ -88,7 +88,7 @@ class ClienteController extends Controller
 
         $user->delete();
 
-        return redirect()->route('ver');
+        return view ('home');
     }
 
 

@@ -14,6 +14,8 @@
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../../resources/js/main.js"></script>
+    <script src="../resources/js/main.js"></script>
+    <script src="../../resources/js/app.js"></script>
     <script src="../resources/js/app.js"></script>
 
 
@@ -21,12 +23,14 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 
     <!-- Styles -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="../../resources/css/app.css" rel="stylesheet">
     <link href="../resources/css/app.css" rel="stylesheet">
-    <link href="../resources/css/search.css" rel="stylesheet">
+    <link href="../../resources/css/search.css" rel="stylesheet">
+    <link href="../resources/sass/dark-button.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
@@ -43,12 +47,12 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 
-<body>
+<body id="main">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <input type="hidden" name="_token" value="{{ Session::token() }}">
-                <a class="navbar-brand" href="{{ route('ver') }}">
+                <a class="navbar-brand" href="{{ route('home') }}">
                     {{ config('app.name', 'QuickFood') }}
                 </a>
                 <a class="navbar-brand" href="{{ route('ver') }}">Carta</a>
@@ -105,8 +109,11 @@
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
+
                             </div>
+
                         </li>
+                        <li></li>
                         @endguest
                     </ul>
                 </div>
@@ -119,5 +126,33 @@
     </div>
 
 </body>
+
+<script>
+    const btnSwitch = document.querySelector('#switch');
+
+btnSwitch.addEventListener('click', function() {
+    btnSwitch.classList.toggle('active');
+});
+    $('#main').toggleClass(localStorage.toggled);
+    
+
+function darkLight() {
+  if (localStorage.toggled != 'dark') {
+    $('#main').toggleClass('dark', true);
+    localStorage.toggled = "dark";
+    btnSwitch.classList.remove('active');
+  } else {
+    $('#main').toggleClass('dark', false);
+    localStorage.toggled = "";
+    btnSwitch.classList.add('active');
+  }
+}
+
+if ($('main').hasClass('dark')) {
+   $( '#switch' ).prop( "checked", true )
+} else {
+  $( '#switch' ).prop( "checked", false )
+}
+</script>
 
 </html>

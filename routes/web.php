@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-/*Route::get('/', function () {
-    return view('welcome');
-});*/
+Route::get('/', function () {
+    return view('home');
+});
 
 /**
  * REDIRIGE A LA PÁGINA INDEX
@@ -33,21 +33,22 @@ use Illuminate\Support\Facades\Auth;
  * REDIRIGE AL LOGIN Y AL REGISTRO
  */
 
-/*Route::get('login' , function() {
+Route::get('login' , function() {
     $title = "Login";
 
     return view('users.login' , array(
         'login' => $title
     ));
-});*/
+});
 
 Auth::routes();
 
 //Route::match(['get','post'], '/ver', [App\Http\Controllers\CartaController::class, 'ver'])->name('ver');
+Route::get('/',  [App\Http\Controllers\HomeController::class, 'index']);
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/profile/{id}' ,  [App\Http\Controllers\ClienteController::class, 'profile'])->name('profile');
 Route::get('logout', [App\Http\Controllers\Auth\LoginController::class , 'logout'])->name('logout') ;
-Route::get('ver',  [App\Http\Controllers\CartaController::class, 'ver'])->name('ver');
-Route::get('/', [App\Http\Controllers\CartaController::class, 'ver'])->name('ver');
+Route::get('/ver',  [App\Http\Controllers\CartaController::class, 'ver'])->name('ver');
 Route::get('/config' , [App\Http\Controllers\ClienteController::class, 'config'])->name('config');
 Route::post('/usuario/update' , [App\Http\Controllers\ClienteController::class, 'update'])->name('user.update');
 Route::get('/usuario/delete' , [App\Http\Controllers\ClienteController::class, 'delete'])->name('user.delete');
@@ -62,3 +63,6 @@ Route::post('/add' ,  [App\Http\Controllers\AdminController::class, 'add_carta']
 Route::get('/search1', [App\Http\Controllers\CartaController::class, 'index'])->name('search');
 Route::get('/autocomplete', [App\Http\Controllers\CartaController::class, 'autocomplete'])->name('autocomplete');
 Route::get('/product', [App\Http\Controllers\CartaController::class, 'product_show'])->name('product');
+Route::get('/producto/borrar/{id}' ,  [App\Http\Controllers\AdminController::class, 'delete_product'])->name('product.delete');
+Route::post('/product/update' , [App\Http\Controllers\AdminController::class, 'edit_product'])->name('producto.update');
+Route::get('/edit/{id}' , [App\Http\Controllers\AdminController::class, 'view_edit'])->name('product.update');

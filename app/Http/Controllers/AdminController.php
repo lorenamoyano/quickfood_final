@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\User ;
+use App\Models\Cliente ;
 use App\Models\Carta ;
 
 class AdminController extends Controller
@@ -51,5 +51,35 @@ class AdminController extends Controller
         ]);
         return redirect()->route('ver');
         
+    }
+
+    public function delete_product($id) {
+        $producto = Carta::find($id);
+        $producto->delete();
+
+        return redirect()->route('ver');
+    }
+
+    public function view_edit($id) {
+        $producto = Carta::find($id)->where("id", "LIKE", "$id")->get();
+        return view ('carta.edit_producto' , ['producto' => $producto]);
+    }
+
+    public function edit_product(Request $request) {
+        //validación de los datos del formulario
+        $validate = $this->validate($request , [
+            'nombre' => ['required', 'string', 'max:250'],
+            'precio' => ['required' , 'string' , 'max:5'],
+            'descripcion' => ['required' , 'string' , 'max:250']
+        ]);
+
+        //recogida de los datos del formulario
+        $producto = Carta::find($request)->where('id', $request->input('id'))->first();
+        $producto->nombre = $request->input('nombre');
+        $producto->precio = $request->input('precio');
+        $producto->descripcion = $request->input('descripcion');
+
+        $producto->save();
+        return redirect()->route('ver');
     }
 }

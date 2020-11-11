@@ -27,23 +27,17 @@
                         <div class="card-body">
                             <table>
                                 <tr>
-                                    <h5 class="card-title text-truncate ">{{ $carta->nombre }}</h5>
-                                </tr>
-                                <tr>
-                                    <p class="card-text">{{ $carta->descripcion }}</p>
-                                </tr>
-                                <tr>
-                                    <p class="card-text" id="sus">{{number_format ($carta->precio,2) }}€</p>
+                                    <h5 class="card-title text-truncate">{{ $carta->nombre }}</h5>
                                 </tr>
 
-                                
+
                                 <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal-{{ $carta->id }}">
-                                    Ver
-                                </button>
+                                <a type="button" data-toggle="modal" data-target="#myModal-{{ $carta->id }}">
+                                    <i class="far fa-eye" style="color:blue;"></i>
+                                </a>
 
                                 <!-- Modal -->
-                                <div class="modal fade" id="myModal-{{ $carta->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div data-backdrop="static" data-keyboard="false" class="modal fade" id="myModal-{{ $carta->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -58,31 +52,76 @@
                                                 <h6>{{number_format ($carta->precio,2) }}€</h6>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                <button type="button" class="btn btn-success">Pedir</button>
+                                                <a type="button" data-dismiss="modal"><i class="fas fa-arrow-left"></i></a>
+                                                @if(Auth::user() && Auth::user()->perfil=="admin")
+                                                <a href="{{route('product.update' , ['id' =>$carta->id])}}"><i class="fas fa-edit"></i></a>
+                                                <a href=""></a>
+                                                <!-- Button trigger modal -->
+                                                <a data-toggle="modal" href="#myModal2" style="color:red"><i class="fas fa-trash-alt"></i></a>
                                             </div>
+                                            @endif
+                                            @if(Auth::user() && Auth::user()->perfil=="user")
+                                            <a href="" style="color:green"><i class="fas fa-shopping-basket"></i></a>
+                                            @endif
+                                            @if(!Auth::user())
+                                            <a href="{{route('login')}}" style="color:green"><i class="fas fa-shopping-basket"></i></a>
+                                            @endif
+
                                         </div>
                                     </div>
                                 </div>
-
-                            </table>
                         </div>
-                    </div>
 
-                    @endforeach
+                        </table>
+                    </div>
                 </div>
+
+                @endforeach
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- MODAL CONFIRMACIÓN -->
+<div class="modal" id="myModal2" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- editar esto con css -->
+                <h4 class="modal-title">Confirmación de eliminado</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="container"></div>
+            <div class="modal-body">
+                ¿Desea eliminar el producto?
+            </div>
+            <div class="modal-footer">
+                <a href="{{route('ver')}}" data-dismiss="modal" class="btn">No</a>
+                <a href="{{route('product.delete' , ['id' =>$carta->id])}}" style="color:red"><i class="fas fa-trash-alt"></i></a>
             </div>
         </div>
-        <!-- PAGINACION -->
-
-        <br>
-
     </div>
+</div>
+<br>
+
+</div>
+
+<label class="switch">
+  <input type="checkbox">
+  <span class="slider round" onclick="myFunction()"></span>
+</label> Modo oscuro
 
 </div>
 
 </div>
 </div>
+<script>
+function myFunction() {
+   var element = document.body;
+   element.classList.toggle("dark-mode");
+}
+</script>
 
 
 <script>
