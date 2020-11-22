@@ -100,6 +100,12 @@
                                 </a>
                                 @endif
 
+                                @if (Auth::user()->perfil === 'user')
+                                <a class="dropdown-item" href="{{ route('carrito' , ['id' => Auth::user()->id]) }}">
+                                    {{ __('Carrito') }}
+                                </a>
+                                @endif
+
 
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -128,31 +134,7 @@
 </body>
 
 <script>
-    const btnSwitch = document.querySelector('#switch');
-
-btnSwitch.addEventListener('click', function() {
-    btnSwitch.classList.toggle('active');
-});
-    $('#main').toggleClass(localStorage.toggled);
     
-
-function darkLight() {
-  if (localStorage.toggled != 'dark') {
-    $('#main').toggleClass('dark', true);
-    localStorage.toggled = "dark";
-    btnSwitch.classList.remove('active');
-  } else {
-    $('#main').toggleClass('dark', false);
-    localStorage.toggled = "";
-    btnSwitch.classList.add('active');
-  }
-}
-
-if ($('main').hasClass('dark')) {
-   $( '#switch' ).prop( "checked", true )
-} else {
-  $( '#switch' ).prop( "checked", false )
-}
 </script>
 
 </html>

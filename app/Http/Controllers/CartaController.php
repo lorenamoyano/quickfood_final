@@ -10,6 +10,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Carta;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -49,5 +51,11 @@ class CartaController extends Controller
         $producto = Carta::find($id);
 
         return view('carta.product' , ['producto' => $producto]);
+    }
+
+    public function cesta(Request $id) {
+        $user = Auth::user();
+        $producto = Carta::find($id);
+        return view ('carta.cesta' , ['producto' => $producto]);
     }
 }

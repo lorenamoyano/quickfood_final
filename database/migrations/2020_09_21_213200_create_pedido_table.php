@@ -14,8 +14,26 @@ class CreatePedidoTable extends Migration
     public function up()
     {
         Schema::create('pedido', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->unsignedInteger('idCliente');
+            $table->unsignedInteger('idCarta');
+            $table->integer('cantidad');
+            $table->float('total');
             $table->timestamps();
+        });
+
+        Schema::table('pedido_carta', function (Blueprint $table){
+            $table->foreign('idCliente')->references('id')
+                ->on('cliente')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+        });
+
+        Schema::table('pedido_carta', function (Blueprint $table){
+            $table->foreign('idCarta')->references('id')
+                ->on('carta')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

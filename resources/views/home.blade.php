@@ -9,10 +9,7 @@
 
             <a href="{{route('ver')}}">Pedir</a>
             <a href="">Mis pedidos</a>
-            <button class="switch" id="switch" onclick="darkLight()">
-                <span><i class="fas fa-sun"></i></span>
-                <span><i class="fas fa-moon"></i></span>
-            </button>
+            
         </div>
     </div>
 </div>

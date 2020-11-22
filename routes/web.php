@@ -66,3 +66,7 @@ Route::get('/product', [App\Http\Controllers\CartaController::class, 'product_sh
 Route::get('/producto/borrar/{id}' ,  [App\Http\Controllers\AdminController::class, 'delete_product'])->name('product.delete');
 Route::post('/product/update' , [App\Http\Controllers\AdminController::class, 'edit_product'])->name('producto.update');
 Route::get('/edit/{id}' , [App\Http\Controllers\AdminController::class, 'view_edit'])->name('product.update');
+Route::get('/cesta' , [App\Http\Controllers\CartaController::class, 'cesta'])->name('cesta');
+Route::post('/producto/add' ,  [App\Http\Controllers\PedidoController::class, 'add'])->name('producto.add');
+Route::get('/carrito/{id}' , [App\Http\Controllers\PedidoController::class, 'carrito'])->name('carrito');
+Route::get('/pedido/borrar/{id}' ,  [App\Http\Controllers\PedidoController::class, 'borrar'])->name('pedido.borrar');

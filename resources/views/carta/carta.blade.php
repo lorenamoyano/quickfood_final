@@ -61,7 +61,7 @@
                                             </div>
                                             @endif
                                             @if(Auth::user() && Auth::user()->perfil=="user")
-                                            <a href="" style="color:green"><i class="fas fa-shopping-basket"></i></a>
+                                            <a href="{{route('cesta' , ['id' =>$carta->id])}}" style="color:green"><i class="fas fa-shopping-basket"></i></a>
                                             @endif
                                             @if(!Auth::user())
                                             <a href="{{route('login')}}" style="color:green"><i class="fas fa-shopping-basket"></i></a>
@@ -106,22 +106,6 @@
 <br>
 
 </div>
-
-<label class="switch">
-  <input type="checkbox">
-  <span class="slider round" onclick="myFunction()"></span>
-</label> Modo oscuro
-
-</div>
-
-</div>
-</div>
-<script>
-function myFunction() {
-   var element = document.body;
-   element.classList.toggle("dark-mode");
-}
-</script>
 
 
 <script>

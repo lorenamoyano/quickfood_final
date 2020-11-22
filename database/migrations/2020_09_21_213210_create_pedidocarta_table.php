@@ -15,7 +15,15 @@ class CreatePedidocartaTable extends Migration
     {
         Schema::create('pedidocarta', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('idCarta');
             $table->timestamps();
+        });
+
+        Schema::table('pedido', function (Blueprint $table){
+            $table->foreign('idCarta')->references('id')
+                ->on('carta')
+                ->onDelete('no action')
+                ->onUpdate('no action');
         });
     }
 
