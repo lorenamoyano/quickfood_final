@@ -1,40 +1,39 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+<div class="container h-500" style="height:500px">
+    <div class="row justify-content-center h-500" style="height:500px">
+        <div class="col-md-8 align-self-center h-500" style="height:500px">
+                    <form method="POST" action="{{ route('login') }}" class="formulario">
                         @csrf
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                            <div class="col-sm-6 input-icons mx-auto">
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+
+
+                                <i class="fas fa-at icon"></i>
+                                <input id="email" placeholder="Email" style="text-align: center;" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                                 @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
+
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
+                            <div class="col-sm-6 input-icons mx-auto">
+                                <i class="fas fa-key icon"></i>
+                                <input id="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" data-toggle="password" class="form-control" type="password" placeholder="Contraseña" style="text-align: center;">
+                                <i class="far fa-eye ojo" id="togglePassword"></i>
+                                <!--<input type="checkbox" id="checkbox">Show Password-->
                                 @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                         </div>
@@ -58,22 +57,35 @@
                                 </button>
 
                                 @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
+                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    {{ __('Forgot Your Password?') }}
+                                </a>
                                 @endif
                             </div>
                             <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <a href="register" type="submit" class="btn btn-primary">
-                                    {{ __('Registro') }}
-                                </a>
+
                             </div>
-                        </div>
                     </form>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+
+<script>
+    $(document).ready(function() {
+        $('#checkbox').on('change', function() {
+            $('#password').attr('type', $('#checkbox').prop('checked') == true ? "text" : "password");
+        });
+    });
+</script>
+<script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#password');
+    togglePassword.addEventListener('click', function(e) {
+        // toggle the type attribute
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        // toggle the eye slash icon
+        this.classList.toggle('fa-eye-slash');
+    });
+</script>
 @endsection

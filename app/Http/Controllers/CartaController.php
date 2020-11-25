@@ -14,6 +14,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\Paginator;
 
 class CartaController extends Controller
 {
@@ -23,7 +24,8 @@ class CartaController extends Controller
      */
     public function ver()
     {
-        $carta = DB::table('carta')->get();
+        $carta = DB::table('carta')->orderBy('id')->paginate(6);
+        //dd($carta);
         return view('carta.carta', ['carta' => $carta]);
     }
 

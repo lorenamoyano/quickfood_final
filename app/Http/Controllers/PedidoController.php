@@ -55,4 +55,15 @@ class PedidoController extends Controller
         return redirect()->route('carrito' , $user);
     }
 
+    public function pagar($id) {
+        $user = Auth::user()->id;
+        $pedido = DB::table('pedido')->join('cliente' , 'cliente.id' , '=' , 'pedido.idCliente')
+                                      ->join('carta' , 'carta.id' , '=' , 'pedido.idCarta')
+                                      ->select('cliente.*' , 'carta.*', 'pedido.*')
+                                      ->where('idCliente' , '=' , $id)
+                                      ->get();
+        //dd($pedido);
+        return view('carta.pagar' , ['id' => $id , 'pedido' => $pedido]);
+    }
+
 }

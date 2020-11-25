@@ -8,6 +8,7 @@
     <div>
         <div>
             <div class="container">
+                
                 <h1>Aquí está tu cesta de la compra, {{Auth::user()->nombre}}</h1>
                 <table>
                     <tr>
@@ -18,6 +19,7 @@
 
                     </tr>
                     @foreach($carrito as $carrito)
+                    <input type="hidden" value="{{$carrito->id}}" name="id" id="id">
                     <tr>
                         <td>{{$carrito->nombre}}</td>
                         <td>{{$carrito->cantidad}}</td>
@@ -39,7 +41,7 @@
 
                 </table>
                 <div>
-                    <a type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+                    <a href="{{route('pedido.pagar',['id' => Auth::user()->id])}}" type="button" class="btn btn-success">
                         Pagar
                     </a>
                 </div>
@@ -49,29 +51,4 @@
     </div>
 
 </div>
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Forma de recogida</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>¡Hola, {{Auth::user()->nombre}}!</p><br>
-                <p>Nos alegra muchísimo que cuentes una vez más con nosotros. Sólo nos queda una última 
-                cosa antes de proceder con el pago.</p><br>
-                <p>¿Quieres recibir el pedido en casa <strong>(gasto extra de 1€)</strong> 
-                o quieres venir a recogerlo en el local?</p>
-            </div>
-            <div class="modal-footer">
-                <a href="" type="button" class="btn btn-primary" data-dismiss="modal">Recogida en local</a>
-                <a href="" type="button" class="btn btn-primary">Reparto a domicilio</a>
-            </div>
-        </div>
-    </div>
-</div>
-
 @endsection

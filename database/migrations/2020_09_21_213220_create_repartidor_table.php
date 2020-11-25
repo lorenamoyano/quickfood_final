@@ -14,9 +14,27 @@ class CreateRepartidorTable extends Migration
     public function up()
     {
         Schema::create('repartidor', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->unsignedInteger('idReparto');
+            $table->unsignedInteger('idCliente');
             $table->timestamps();
         });
+
+        Schema::table('repartidor', function (Blueprint $table){
+            $table->foreign('idReparto')->references('id')
+                ->on('reparto')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+        });
+
+        Schema::table('repartidor', function (Blueprint $table){
+            $table->foreign('idCliente')->references('id')
+                ->on('cliente')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+        });
+
+        
     }
 
     /**

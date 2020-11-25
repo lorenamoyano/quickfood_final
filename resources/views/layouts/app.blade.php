@@ -17,10 +17,12 @@
     <script src="../resources/js/main.js"></script>
     <script src="../../resources/js/app.js"></script>
     <script src="../resources/js/app.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jscroll/2.4.1/jquery.jscroll.min.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
@@ -45,85 +47,86 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-</head>
+    </head>
 
 <body id="main">
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm" id="navbar">
             <div class="container">
                 <input type="hidden" name="_token" value="{{ Session::token() }}">
-                <a class="navbar-brand" href="{{ route('home') }}">
-                    {{ config('app.name', 'QuickFood') }}
-                </a>
-                <a class="navbar-brand" href="{{ route('ver') }}">Carta</a>
+                <a class="navbar-brand" href="{{ route('home') }}">Inicio</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-item" href="{{ route('ver') }}">
+                            {{ __('Carta') }}
+                        </a>
+                    </li>
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
+                    @guest
+                    <li class="nav-item dropdown navbar-nav ml-auto">
+                        <a class="dropdown-item" href="{{ route('login') }}">{{ __('Login') }}</a>
+                    </li>
+                    @if (Route::has('register'))
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-item" href="{{ route('register') }}">{{ __('Register') }}</a>
+                    </li>
+                    @endif
+                    @else
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-item" href="{{ route('profile' , ['id' => Auth::user()->id]) }}">
+                            {{ __('Perfil') }}
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a class="dropdown-item" href="{{route('contacto')}}">
+                            {{ __('Nosotros') }}
+                        </a>
+                    </li>
 
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                        </li>
-                        @if (Route::has('register'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                        </li>
+                    <li>
+                        @if (Auth::user()->perfil === 'admin')
+                        <a class="dropdown-item" href="{{ route('admin_panel') }}">
+                            {{ __('Panel Administración') }}
+                        </a>
                         @endif
-                        @else
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->nombre }}
-                            </a>
 
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        @if (Auth::user()->perfil === 'user')
+                        <a class="dropdown-item" href="{{ route('carrito' , ['id' => Auth::user()->id]) }}">
+                        <i class="fas fa-shopping-basket" style="color:black"></i>
+                        </a>
+                        @endif
 
-                                <a class="dropdown-item" href="{{ route('profile' , ['id' => Auth::user()->id]) }}">
-                                    {{ __('Perfil') }}
-                                </a>
-
-                                <a class="dropdown-item" href="{{ route('config') }}">
-                                    {{ __('Configuración') }}
-                                </a>
-
-                                @if (Auth::user()->perfil === 'admin')
-                                <a class="dropdown-item" href="{{ route('admin_panel') }}">
-                                    {{ __('Panel Administración') }}
-                                </a>
-                                @endif
-
-                                @if (Auth::user()->perfil === 'user')
-                                <a class="dropdown-item" href="{{ route('carrito' , ['id' => Auth::user()->id]) }}">
-                                    {{ __('Carrito') }}
-                                </a>
-                                @endif
-
-
-                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-
-                            </div>
-
-                        </li>
-                        <li></li>
-                        @endguest
-                    </ul>
+                    </li>
                 </div>
+
+
+                <!-- Right Side Of Navbar -->
+                <ul class="navbar-nav ml-auto">
+                    <!-- Authentication Links -->
+                    <a class="nav-link disabled" href="#" role="button" aria-haspopup="true" aria-expanded="false" v-pre>
+                        Bienvenido, {{ Auth::user()->nombre }}
+                    </a>
+                    <li>
+                        <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </li>
+                    @endguest
+                </ul>
             </div>
+
         </nav>
 
         <main class="py-4">
@@ -134,7 +137,7 @@
 </body>
 
 <script>
-    
+
 </script>
 
 </html>

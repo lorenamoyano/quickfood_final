@@ -14,8 +14,25 @@ class CreateRepartoTable extends Migration
     public function up()
     {
         Schema::create('reparto', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->unsignedInteger('idCliente');
+            $table->unsignedInteger('idPedido');
+            $table->boolean('recogida' , 1);
             $table->timestamps();
+        });
+
+        Schema::table('reparto', function (Blueprint $table){
+            $table->foreign('idCliente')->references('id')
+                ->on('cliente')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+        });
+
+        Schema::table('reparto', function (Blueprint $table){
+            $table->foreign('idPedido')->references('id')
+                ->on('pedido')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

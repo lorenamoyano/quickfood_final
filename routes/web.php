@@ -49,7 +49,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/profile/{id}' ,  [App\Http\Controllers\ClienteController::class, 'profile'])->name('profile');
 Route::get('logout', [App\Http\Controllers\Auth\LoginController::class , 'logout'])->name('logout') ;
 Route::get('/ver',  [App\Http\Controllers\CartaController::class, 'ver'])->name('ver');
-Route::get('/config' , [App\Http\Controllers\ClienteController::class, 'config'])->name('config');
 Route::post('/usuario/update' , [App\Http\Controllers\ClienteController::class, 'update'])->name('user.update');
 Route::get('/usuario/delete' , [App\Http\Controllers\ClienteController::class, 'delete'])->name('user.delete');
 Route::get('/buscar/{nombre?}' , [App\Http\Controllers\CartaController::class, 'buscar'])->name('buscar');
@@ -70,3 +69,6 @@ Route::get('/cesta' , [App\Http\Controllers\CartaController::class, 'cesta'])->n
 Route::post('/producto/add' ,  [App\Http\Controllers\PedidoController::class, 'add'])->name('producto.add');
 Route::get('/carrito/{id}' , [App\Http\Controllers\PedidoController::class, 'carrito'])->name('carrito');
 Route::get('/pedido/borrar/{id}' ,  [App\Http\Controllers\PedidoController::class, 'borrar'])->name('pedido.borrar');
+Route::get('/pedido/pagar/{id}' ,  [App\Http\Controllers\PedidoController::class, 'pagar'])->name('pedido.pagar');
+Route::get('/contacto', [App\Http\Controllers\ClienteController::class, 'contacto'])->name('contacto');
+Route::get('/user/avatar/{filename}', [App\Http\Controllers\ClienteController::class, 'getImagen'])->name('user.avatar');

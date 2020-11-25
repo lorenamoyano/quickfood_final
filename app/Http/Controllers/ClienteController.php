@@ -13,6 +13,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+use Illuminate\Http\Response;
 
 class ClienteController extends Controller
 {
@@ -36,17 +39,12 @@ class ClienteController extends Controller
         //return redirect()->with('error', '¡No tienes permisos para acceder a este usuario!');
     }
 
-    public function config() {
-        return view ('users.config');
-    }
-
     public function update(Request $request) {
         //conseguir el usuario que esta identificado
         
         $userDetails = Auth::user();
         $user = User::find($userDetails ->id);
         $id = $user->id;
-
         
         //validación de los datos del formulario
         $validate = $this->validate($request , [
@@ -57,7 +55,7 @@ class ClienteController extends Controller
             'email' => ['required', 'string', 'email', 'max:100', 'unique:cliente,email,'.$id],
             'ciudad' => ['required' , 'string' , 'max:50'],
         ]);
-
+            //dd($validate);
         //recogida de los datos del formulario
         $nombre = $request->input('nombre');
         $apellido1 = $request->input('apellido1');
@@ -74,10 +72,18 @@ class ClienteController extends Controller
         $user->email = $email;
         $user->ciudad = $ciudad;
 
+        //subir la imagen
+        $imagen_path = $request->file('avatar');
+        if($imagen_path) {
+            $imagen_path_name = time().$imagen_path->getClientOriginalName();
+            Storage::disk('imagenes')->put($imagen_path_name , File::get($imagen_path));
+            $user->avatar = $imagen_path_name;
+        }
+
         //ejecutar consulta y guardar los cambios
         $user->update();
 
-        return redirect()->route('config')->with(['message'=>'Usuario actualizado correctamente']);
+        return redirect()->route('profile' , ['id' => $id]);
     }
 
 
@@ -92,6 +98,13 @@ class ClienteController extends Controller
     }
 
     
-    
+    public function contacto() {
+        return view('users.nosotros');
+    }
+
+    public function getImagen($filename) {
+        $file = Storage::disk('imagenes')->get($filename);
+        return new Response($file , 200);
+    }
     
 }

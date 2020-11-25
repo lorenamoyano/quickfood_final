@@ -47,7 +47,7 @@ class AdminController extends Controller
         Carta::create([
             'nombre' => $nombre,
             'precio' => $precio,
-            'descripcion' => $descripcion
+            'descripcion' => $descripcion,
         ]);
         return redirect()->route('ver');
         

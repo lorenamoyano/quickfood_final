@@ -10,22 +10,24 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
-class Carta extends Model
+class Repartidor extends Model
 {
     protected $guarded = [];
-    protected $table = 'carta' ;
-   // protected $primaryKey = 'id' ;
+    protected $table = 'repartidor' ;
+    
+    protected $primaryKey = 'id' ;
 
 
     //public $timestamps = false ;
 
     use HasFactory, Notifiable;
 
-    public $fillable = [ 'nombre', 'precio' , 'descripcion'];
+    public $fillable = ['idReparto','idCliente'];
 
     /*public function getSearchResult(): SearchResult
     {
        return new SearchResult($this, $this->title, route('front.post.show', $this->slug));
     }*/
 
+    
 }

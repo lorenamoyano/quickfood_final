@@ -23,6 +23,7 @@ class CreateClienteTable extends Migration
             $table->string('email' , 100)->unique();
             $table->string('password' , 300);
             $table->string('ciudad' , 50);
+            $table->string('avatar' , 255);
             $table->timestamps();
             $table->rememberToken() ;
         });
