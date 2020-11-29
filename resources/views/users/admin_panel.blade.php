@@ -8,9 +8,11 @@
 <div class="row justify-content-center">
     <div class="col-md-10">
         <br>
-
+        <div class="col-md-12">
+        <input class="form-control my-3" type='text' id='txt_searchall' placeholder='Buscar usuario'>
+        </div>
         <div>
-            <table class="table">
+            <table class="col-md-12 table_admin">
                 <thead>
                     <tr>
                         <th>Nombre</th>
@@ -25,11 +27,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                <form method="POST" action="{{ route('perfil') }}">
-                    @csrf <!-- si no se pone da un error de que la página ha expirado -->
-                    <input id="id" type="hidden" name="id" value="" />
-                    <input id="perfil" type="hidden" name="perfil" value="" />
-                </form>
+                    <form method="POST" action="{{ route('perfil') }}">
+                        @csrf
+                        <!-- si no se pone da un error de que la página ha expirado -->
+                        <input id="id" type="hidden" name="id" value="" />
+                        <input id="perfil" type="hidden" name="perfil" value="" />
+                    </form>
 
                     @foreach($user as $user)
                     <tr>
@@ -48,11 +51,11 @@
                             </select>
                         </td>
                         <td>{{ $diff = Carbon\Carbon::parse($user->created_at)->diffForHumans(Carbon\Carbon::now()) }}</td>
-
+                        
                         <td><a href="{{ route('delete' , ['id' => $user->id]) }}"><i class="fa fa-trash" style="color:red"></i></a></td>
                     </tr>
+                    
                     @endforeach
-
             </table>
         </div>
         <br>
@@ -63,18 +66,43 @@
 </div>
 
 <script>
-    $(document).ready(function(){
-	$('select').change(function(e){
+    $(document).ready(function() {
+        $('select').change(function(e) {
 
-		var id = $(e.target).data('id');
-		var profile = '#' + id.toString() + " option:selected";
-		$('#perfil').val($(profile).val());
-        $('#id').val(id) ;
+            var id = $(e.target).data('id');
+            var profile = '#' + id.toString() + " option:selected";
+            $('#perfil').val($(profile).val());
+            $('#id').val(id);
 
-		$('form').submit() ;
-    }) ;
-    echo ("Hola");
-});
+            $('form').submit();
+        });
+    });
+</script>
+<script type='text/javascript'>
+    $(document).ready(function() {
+
+        // Search all columns
+        $('#txt_searchall').keyup(function() {
+            var search = $(this).val();
+
+            $('table tbody tr').hide();
+
+            var len = $('table tbody tr:not(.notfound) td:contains("' + search + '")').length;
+
+            if (len > 0) {
+                $('table tbody tr:not(.notfound) td:contains("' + search + '")').each(function() {
+                    $(this).closest('tr').show();
+                });
+            }
+
+        });
+    });
+    // Case-insensitive searching (Note - remove the below script for Case sensitive search )
+    $.expr[":"].contains = $.expr.createPseudo(function(arg) {
+        return function(elem) {
+            return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+        };
+    });
 </script>
 
 @else

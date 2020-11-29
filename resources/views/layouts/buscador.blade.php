@@ -22,7 +22,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
@@ -45,7 +45,7 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    </head>
+</head>
 
 <body id="main">
     <div id="app">
@@ -80,8 +80,8 @@
                             {{ __('Perfil') }}
                         </a>
                     </li>
-                    
-                    
+
+
                     <li>
                         <a class="dropdown-item" href="{{route('contacto')}}">
                             {{ __('Nosotros') }}
@@ -97,7 +97,7 @@
 
                         @if (Auth::user()->perfil === 'user')
                         <a class="dropdown-item" href="{{ route('carrito' , ['id' => Auth::user()->id]) }}">
-                        <i class="fas fa-shopping-basket" style="color:black"></i>
+                            <i class="fas fa-shopping-basket" style="color:black"></i>
                         </a>
                         @endif
 
@@ -107,6 +107,11 @@
 
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
+                    <div>
+                    <!-- BUSCADOR -->
+                    <input type="text" name="q" class="form-control my-3 search-input">
+                    
+                    </div>
                     <!-- Authentication Links -->
                     <a class="nav-link disabled" href="#" role="button" aria-haspopup="true" aria-expanded="false" v-pre>
                         Bienvenido, {{ Auth::user()->nombre }}
@@ -123,9 +128,11 @@
                     </li>
                     @endguest
                 </ul>
+                
             </div>
 
         </nav>
+        <div class="list-group list-group-flush  search-result col-sm-6 ml-auto"></div>
 
         <main class="py-4">
             @yield('content')
@@ -135,7 +142,31 @@
 </body>
 
 <script>
+    $(document).ready(function() {
+        $('.search-input').on('keyup', function() {
+            var _q = $(this).val();
+            if (_q.length > 0) {
+                $.ajax({
+                    url: "{{url('search')}}",
+                    data: {
+                        q: _q
+                    },
+                    dataType: 'json',
+                    success: function(res) {
+                        var _html = '';
+                        $.each(res.data, function(index, data) {
+                            _html += '<li class="list-group-item"><a href="http://localhost/quickfood/quickfood/public/product/' + data.id + '">' + data.nombre + '</a></li>'
+                        });
+                        $(".search-result").html(_html);
+                    }
+                });
+            } else {
+                $(".search-result").html('');
+                return false;
+            }
+        });
 
+    });
 </script>
 
 </html>

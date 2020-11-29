@@ -24,7 +24,7 @@ class CartaController extends Controller
      */
     public function ver()
     {
-        $carta = DB::table('carta')->orderBy('id')->paginate(6);
+        $carta = DB::table('carta')->orderBy('id')/*->paginate(6)*/->get();
         //dd($carta);
         return view('carta.carta', ['carta' => $carta]);
     }
@@ -42,16 +42,23 @@ class CartaController extends Controller
      */
     public function autocomplete(Request $request)
     {
-        $res = DB::table('carta')
+        //$id = $request;
+        
+        $res = DB::table('carta')->select("id" , "nombre")
             ->where("nombre", "LIKE", "%{$request->term}%")
             ->get();
 
         return response()->json($res);
+        
+        /*([
+            'res' => $res,
+            'id' => $id
+        ]);*/
     }
 
-    public function product_show (Request $id) {
-        $producto = Carta::find($id);
-
+    public function product_show ($id) {
+        $producto = Carta::find($id)->get();
+        $producto = Carta::select('nombre' , 'precio' , 'descripcion')->where("id", "LIKE", "{$id}")->get();
         return view('carta.product' , ['producto' => $producto]);
     }
 

@@ -8,11 +8,17 @@
     <div>
         <div>
             <div class="container">
+            
+
+            <div style="display: none;">{{ $total = 0 }}</div> 
+            
                 
+                
+                {{$total}}
                 <h1>Aquí está tu cesta de la compra, {{Auth::user()->nombre}}</h1>
                 <table>
                     <tr>
-                        <div style="display: none;">{{ $total = 0 }}</div>
+
                         <th>Producto</th>
                         <th>Cantidad</th>
                         <th>Precio</th>
@@ -20,6 +26,7 @@
                     </tr>
                     @foreach($carrito as $carrito)
                     <input type="hidden" value="{{$carrito->id}}" name="id" id="id">
+                
                     <tr>
                         <td>{{$carrito->nombre}}</td>
                         <td>{{$carrito->cantidad}}</td>
@@ -31,7 +38,7 @@
                     <tr>
 
                     </tr>
-
+                    
                     @endforeach
                     <tr>
                         <td><strong>TOTAL</strong></td>
@@ -47,6 +54,7 @@
                 </div>
 
             </div>
+            
         </div>
     </div>
 

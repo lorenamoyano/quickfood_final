@@ -179,6 +179,22 @@ li {
   margin-bottom: 15px;
 }
 
+.table_admin {
+  border-radius: 8px;
+  box-shadow: 2px 2px 2px 1px rgba(26, 25, 25, 0.596);
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+#submit {
+  background-color: lightcoral !important;
+  border: lightcoral !important;
+}
+
+#submit:hover {
+  background-color: lightsalmon !important;
+  border: lightcoral !important;
+}
+
 /* ******** */
 
 

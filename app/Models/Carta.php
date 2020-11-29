@@ -28,4 +28,9 @@ class Carta extends Model
        return new SearchResult($this, $this->title, route('front.post.show', $this->slug));
     }*/
 
+    public function nombre()
+    {
+    	return $this->hasOne(Nombre::class);
+    }
+
 }
