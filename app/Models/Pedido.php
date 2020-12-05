@@ -22,7 +22,7 @@ class Pedido extends Model
 
     use HasFactory, Notifiable;
 
-    public $fillable = [ 'idCliente', 'idCarta', 'cantidad', 'total'];
+    public $fillable = [ 'idCliente' , 'idCar', 'pago' , 'cantidad' , 'fecha'];
 
     /*public function getSearchResult(): SearchResult
     {

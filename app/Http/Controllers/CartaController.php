@@ -24,15 +24,29 @@ class CartaController extends Controller
      */
     public function ver()
     {
-        $carta = DB::table('carta')->orderBy('id')/*->paginate(6)*/->get();
+        $data = DB::table('carta')->orderBy('id')->paginate(8);
         //dd($carta);
-        return view('carta.carta', ['carta' => $carta]);
+        return view('carta.carta', ['data' => $data])->render();
     }
 
     public function index()
     {
         $carta = DB::table('carta')->get();
         return view('carta.carta' , ['carta' => $carta]);
+    }
+
+
+    function card_data(Request $request) {
+        if ($request->ajax()) {
+            /*$sort_by = $request->get('sortby');
+      $sort_type = $request->get('sorttype');
+            $query = $request->get('query');
+            $query = str_replace(" ", "%", $query);*/
+            $data = DB::table('carta')
+                /*->where('nombre', 'like', '%' . $query . '%')*/
+                ->paginate(8);
+            return view('carta.pagination_card', ['data' => $data])->render();
+        }
     }
 
     /**
@@ -67,4 +81,5 @@ class CartaController extends Controller
         $producto = Carta::find($id);
         return view ('carta.cesta' , ['producto' => $producto]);
     }
+
 }

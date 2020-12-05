@@ -13,16 +13,13 @@ use Spatie\Searchable\SearchResult;
 class PedidoCarta extends Model
 {
     protected $guarded = [];
-    protected $table = 'pedidocarta' ;
+    protected $table = 'pedido_carta' ;
     
     protected $primaryKey = 'id' ;
 
-
-    //public $timestamps = false ;
-
     use HasFactory, Notifiable;
 
-    public $fillable = [ 'idCarta'];
+    public $fillable = ['idPedido' , 'idCarta'];
 
     /*public function getSearchResult(): SearchResult
     {

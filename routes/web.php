@@ -54,7 +54,7 @@ Route::get('/usuario/delete' , [App\Http\Controllers\ClienteController::class, '
 Route::get('/buscar/{nombre?}' , [App\Http\Controllers\CartaController::class, 'buscar'])->name('buscar');
 Route::get('/usuario/admin', [App\Http\Controllers\AdminController::class, 'admin_panel'])->name('admin_panel');
 Route::get('/profile/{id}' ,  [App\Http\Controllers\ClienteController::class, 'profile'])->name('profile');
-Route::post('/perfil' ,  [App\Http\Controllers\AdminController::class, 'perfil'])->name('perfil');
+Route::get('/perfil' ,  [App\Http\Controllers\AdminController::class, 'perfil'])->name('perfil');
 Route::get('/borrar' ,  [App\Http\Controllers\AdminController::class, 'delete_user'])->name('delete');
 Route::get('/anadir' ,  [App\Http\Controllers\AdminController::class, 'anadir'])->name('anadir');
 Route::post('/add' ,  [App\Http\Controllers\AdminController::class, 'add_carta'])->name('add');
@@ -72,3 +72,11 @@ Route::get('/pedido/pagar/{id}' ,  [App\Http\Controllers\PedidoController::class
 Route::get('/contacto', [App\Http\Controllers\ClienteController::class, 'contacto'])->name('contacto');
 Route::get('/user/avatar/{filename}', [App\Http\Controllers\ClienteController::class, 'getImagen'])->name('user.avatar');
 Route::get('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('search');
+Route::get('/historial/{id}' , [App\Http\Controllers\PedidoController::class, 'historial'])->name('historial');
+Route::get('/admin', [App\Http\Controllers\AdminController::class, 'admin_panel'])->name('admin_panel1');
+Route::get('pagination/fetch_data', [App\Http\Controllers\AdminController::class, 'fetch_data'])->name('fetch_data');
+Route::get('pagination',  [App\Http\Controllers\PaginationController::class, 'index'])->name('pagination');
+Route::get('pagination/fetch_data', [App\Http\Controllers\PaginationController::class, 'fetch_data'])->name('fetch_data');
+Route::get('producto/pagado', [App\Http\Controllers\PedidoController::class, 'pagado'])->name('pagado');
+Route::get('reparto', [App\Http\Controllers\PedidoController::class, 'ver_reparto'])->name('ver_reparto');
+Route::post('producto/repartido' ,  [App\Http\Controllers\PedidoController::class, 'repartido'])->name('repartido');

@@ -1,111 +1,92 @@
-@extends('layouts.buscador')
+@extends('layouts.app')
 @section('content')
 
 
 
 <div class="row justify-content-center">
-
-    <div class="col-md-10">
-        @if (Auth::user() && Auth::user()->perfil=="admin")
-        <a href="{{ route('anadir') }}" class="btn btn-success"><i class="fas fa-plus-square"></i> Añadir</a>
-        @endif
-        <div class="container" id="contenedor">
-        </div>
-        <br>
+<!--Buscador -->
+<div class="col-md-10 mx-auto">
+    <div class="form-group">
+        <input type="text" name="search" id="search" class="form-control text-center" placeholder="Buscar producto" />
+    </div>
+</div>
+    <div class="col-sm-11 content">
         
+        
+        @include('carta.pagination_data')
 
-    </div>
-    <br>
-
-    <div>
-        <div class="container">
-            <div class="row">
-
-                @foreach($carta as $cartas)
-                <input type="hidden" name="id" value="{{ $cartas -> id }}">
-                <div class="col-sm-4 card carta" style="width: 15em;">
-                    <img src="" class="card-img-top" alt="" />
-                    <div class="card-body">
-                        <table>
-                            <tr>
-                                <h5 class="card-title text-truncate">{{ $cartas->nombre }}</h5>
-                            </tr>
-
-
-                            <!-- Button trigger modal -->
-                            <a type="button" data-toggle="modal" data-target="#myModal-{{ $cartas->id }}">
-                                <i class="far fa-eye" style="color:blue;"></i>
-                            </a>
-
-                            <!-- Modal -->
-                            <div data-backdrop="static" data-keyboard="false" class="modal fade" id="myModal-{{ $cartas->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Producto</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <h5>{{$cartas->nombre}}</h5>
-                                            <h6>{{$cartas->descripcion}}</h6>
-                                            <h6>{{number_format ($cartas->precio,2) }}€</h6>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <a type="button" data-dismiss="modal"><i class="fas fa-arrow-left"></i></a>
-                                            @if(Auth::user() && Auth::user()->perfil=="admin")
-                                            <a href="{{route('product.update' , ['id' =>$cartas->id])}}"><i class="fas fa-edit"></i></a>
-                                            <a href=""></a>
-                                            <!-- Button trigger modal -->
-                                            <a data-toggle="modal" href="#myModal2" style="color:red"><i class="fas fa-trash-alt"></i></a>
-                                        </div>
-                                        @endif
-                                        @if(Auth::user() && Auth::user()->perfil=="user")
-                                        <a href="{{route('cesta' , ['id' =>$cartas->id])}}" style="color:green"><i class="fas fa-shopping-basket"></i></a>
-                                        @endif
-                                        @if(!Auth::user())
-                                        <a href="{{route('login')}}" style="color:green"><i class="fas fa-shopping-basket"></i></a>
-                                        @endif
-
-                                    </div>
-                                </div>
-                            </div>
-                    </div>
-
-                    </table>
-                </div>
-            </div>
-
-            @endforeach
-        </div>
-        <br>
-
+        <input type="hidden" name="hidden_page" id="hidden_page" value="1" />
+        <input type="hidden" name="hidden_column_name" id="hidden_column_name" value="id" />
+        <input type="hidden" name="hidden_sort_type" id="hidden_sort_type" value="asc" />
     </div>
 </div>
-<!-- MODAL CONFIRMACIÓN -->
-<div class="modal" id="myModal2" data-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <!-- editar esto con css -->
-                <h4 class="modal-title">Confirmación de eliminado</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            </div>
-            <div class="container"></div>
-            <div class="modal-body">
-                ¿Desea eliminar el producto?
-            </div>
-            <div class="modal-footer">
-                <a href="{{route('ver')}}" data-dismiss="modal" class="btn">No</a>
-                <a href="{{route('product.delete' , ['id' =>$cartas->id])}}" style="color:red"><i class="fas fa-trash-alt"></i></a>
-            </div>
-        </div>
-    </div>
-</div>
-<br>
 
-</div>
+
+<script type="application/javascript">
+    $(document).ready(function() {
+
+        function clear_icon() {
+            $('#id_icon').html('');
+            $('#post_title_icon').html('');
+        }
+
+        function fetch_data(page, sort_type, sort_by, query) {
+            $.ajax({
+                url: "pagination/fetch_data?page="+page+"&sortby="+sort_by+"&sorttype="+sort_type+"&query="+query,
+                success: function(data) {
+                    //$('.content').html('');
+                    $('.content').html(data);
+                }
+            })
+        }
+
+        $(document).on('keyup', '#search', function() {
+            var query = $('#search').val();
+            var column_name = $('#hidden_column_name').val();
+            var sort_type = $('#hidden_sort_type').val();
+            var page = $('#hidden_page').val();
+            fetch_data(page, sort_type, column_name, query);
+        });
+
+        $(document).on('click', '.sorting', function() {
+            var column_name = $(this).data('column_name');
+            var order_type = $(this).data('sorting_type');
+            var reverse_order = '';
+            if (order_type == 'asc') {
+                $(this).data('sorting_type', 'desc');
+                reverse_order = 'desc';
+                clear_icon();
+                $('#' + column_name + '_icon').html('<span class="glyphicon glyphicon-triangle-bottom"></span>');
+            }
+            if (order_type == 'desc') {
+                $(this).data('sorting_type', 'asc');
+                reverse_order = 'asc';
+                clear_icon
+                $('#' + column_name + '_icon').html('<span class="glyphicon glyphicon-triangle-top"></span>');
+            }
+            $('#hidden_column_name').val(column_name);
+            $('#hidden_sort_type').val(reverse_order);
+            var page = $('#hidden_page').val();
+            var query = $('#search').val();
+            fetch_data(page, reverse_order, column_name, query);
+        });
+
+        $(document).on('click', '.pagination a', function(event) {
+            event.preventDefault();
+            var page = $(this).attr('href').split('page=')[1];
+            $('#hidden_page').val(page);
+            var column_name = $('#hidden_column_name').val();
+            var sort_type = $('#hidden_sort_type').val();
+
+            var query = $('#search').val();
+
+            $('li').removeClass('active');
+            $(this).parent().addClass('active');
+            fetch_data(page, sort_type, column_name, query);
+        });
+
+    });
+</script>
 
 
 @endsection

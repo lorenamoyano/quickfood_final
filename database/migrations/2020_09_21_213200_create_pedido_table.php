@@ -16,21 +16,21 @@ class CreatePedidoTable extends Migration
         Schema::create('pedido', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('idCliente');
-            $table->unsignedInteger('idCarta');
-            $table->integer('cantidad');
-            $table->float('total');
+            $table->unsignedInteger('idCar');
+            $table->boolean('pago');
+            $table->date('fecha');
             $table->timestamps();
         });
 
-        Schema::table('pedido_carta', function (Blueprint $table){
+        Schema::table('pedido', function (Blueprint $table){
             $table->foreign('idCliente')->references('id')
                 ->on('cliente')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
 
-        Schema::table('pedido_carta', function (Blueprint $table){
-            $table->foreign('idCarta')->references('id')
+        Schema::table('pedido', function (Blueprint $table){
+            $table->foreign('idCar')->references('id')
                 ->on('carta')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');

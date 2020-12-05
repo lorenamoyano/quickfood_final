@@ -13,13 +13,20 @@ class CreatePedidocartaTable extends Migration
      */
     public function up()
     {
-        Schema::create('pedidocarta', function (Blueprint $table) {
+        Schema::create('pedido_carta', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('idCarta');
-            $table->timestamps();
+            $table->unsignedInteger('idCliente');
+            
         });
 
-        Schema::table('pedido', function (Blueprint $table){
+        Schema::table('pedido_carta', function (Blueprint $table){
+            $table->foreign('idPedido')->references('id')
+                ->on('pedido')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+        });
+
+        Schema::table('pedido_carta', function (Blueprint $table){
             $table->foreign('idCarta')->references('id')
                 ->on('carta')
                 ->onDelete('no action')
@@ -34,6 +41,6 @@ class CreatePedidocartaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pedidocarta');
+        Schema::dropIfExists('pedido_carta');
     }
 }

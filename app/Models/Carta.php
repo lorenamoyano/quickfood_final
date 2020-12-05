@@ -33,4 +33,9 @@ class Carta extends Model
     	return $this->hasOne(Nombre::class);
     }
 
+    public function carta()
+    {
+        return $this->hasMany('App\Carta','id');
+    }
+
 }

@@ -1,0 +1,25 @@
+
+.restaurant-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    
+  
+    &__item {
+      width: 100%;
+  
+      @media (min-width: 800px) {
+        width: 50%;
+      }
+  
+      @media (min-width: 1020px) {
+        width: 33%;
+      }
+  
+      @media (min-width: 1200px) {
+        width: 25%;
+      }
+    }
+  }
+  

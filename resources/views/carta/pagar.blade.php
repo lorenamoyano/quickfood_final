@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<link href="{{ asset('../resources/sass/ticket.css') }}" rel="stylesheet">
 
 <div class="container" id="contenedor">
 </div>
@@ -8,78 +9,155 @@
     <div>
         <div>
             <div class="container">
+                <div id="invoice-POS">
 
-                <h1>Aquí está tu cesta el detalle de tu compra, {{Auth::user()->nombre}}</h1>
-                <table>
-                    <div style="display: none;">{{ $total = 0 }}</div>
-                    <tr>
-                        <td>Nombre</td>
-                        <td>Cantidad</td>
-                        <td>Precio</td>
-                        <td>Total</td>
-                    </tr>
-                    @foreach($pedido as $pedido)
-                    <tr>
+                    <table>
+                        <div style="display: none;">{{ $total = 0 }}</div>
 
-                        <td>{{$pedido->nombre}}</td>
-                        <td>{{$pedido->cantidad}}</td>
-                        <td>{{number_format ($pedido->precio,2)}}€</td>
-                        <td>{{number_format ($pedido->total,2)}}€</td>
+                        <center id="top">
+                            <div class="logo"></div>
+                            <div class="info">
+                                <h2>El resumen de tu compra es el siguiente</h2>
+                            </div>
+                        </center>
+                        <table>
+                            <tr class="tabletitle">
+                                <th class="item">
+                                    <h2 class="center">Producto</h2>
+                                </th>
+                                <th class="Hours">
+                                    <h2 class="center">Cantidad</h2>
+                                </th>
+                                <th class="Rate">
+                                    <h2 class="center">Precio</h2>
+                                </th>
+                                <th></th>
+                            </tr>
+                            @foreach($pedido as $pedidos)
+                            <tr class="service">
+                                <td class="tableitem">
+                                    <p class="itemtext">{{$pedidos->nombre}}</p>
+                                </td>
+                                <td class="tableitem">
+                                    <p class="itemtext" id="center">{{$pedidos->cantidad}}</p>
+                                </td>
+                                <td class="tableitem">
+                                    <p class="itemtext" id="center">{{number_format ($pedidos->precio*$pedidos->cantidad,2)}}€</p>
+                                </td>
+                                <td><a href="{{route('pedido.borrar',['id' => $pedidos->id])}}"><i class="far fa-trash-alt" style="color: black"></i></a></td>
+                            </tr>
+                            <div style="display: none">{{ ($total += $pedidos->precio*$pedidos->cantidad)}}</div>
+                            @endforeach
+                            <tr>
+                                <td class="tableitem">
+                                    <p class="itemtext">Reparto</p>
+                                </td>
+                                <td class="tableitem text-center"><i class="fas fa-times itemtext"></i></td>
+                                <td class="tableitem">
+                                    <p class="itemtext" id="center">1.00€</p>
+                                </td>
+                            </tr>
+                            <tr class="tabletitle">
 
-                        <td></td>
-
-                        <div style="display: none">{{ ($total += $pedido->total)}}</div>
-                    </tr>
-                    @endforeach
-                    <tr>
-                        <td>Reparto: 1€</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Total factura: {{number_format ($total+1,2)}}€
-                        </td>
-                    </tr>
-                </table>
-                <a href="#" id="show">Pagar</a>
-                <div id="element" style="display: none;">
-                    <div id="close"><a href="#" id="hide">cerrar</a></div>
-                    <form method="post" action="">
-                        <hr>
-                        Datos personales:<br>
-                        Nombre:<br />
-                        <input type="text" id="name" name="name" size="40" value="{{Auth::user()->nombre}}"/><br />
-                        Dirección:<br />
-                        <input type="text" name="direccion" id="direccion" rows="6" cols="40"></textarea>
-                        <br />
-                        Teléfono:<br />
-                        <input type="text" id="telefono" name="telefono" size="40" value="{{Auth::user()->telefono}}"/>
-                        <hr>
-                        Datos de pago:<br>
-                        Número de la tarjeta:<br>
-                        <input type="text" min="0" max="16"><br>
-                        Fecha de caducidad:<br>
-                        Mes: <input type="number" min="1" max="12"><br>
-                        Año: <input type="number" min="2020" max="2030"><br>
-                        CVC: <input type="number" maxlength="3">
-                        <div style="margin-left: 376px;"><input name="submit" type="submit" value="Pagar" id="enviar-btn" /></div>
-                    </form>
+                                <td class="Rate">
+                                    <h2 class="pad">IVA</h2>
+                                </td>
+                                <td></td>
+                                <td class="payment">
+                                    <h2 class="center1">{{number_format(($total+1)*0.21,2)}}€</h2>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr class="tabletitle">
+                                <td class="Rate">
+                                    <h2 class="pad">Total</h2>
+                                </td>
+                                <td></td>
+                                <td class="payment">
+                                    <h2 class="center1">{{number_format ($total+1,2)}}€</h2>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </table>
                 </div>
+                <!--End Table-->
+            </div>
+        </div>
+        <a type="button" class="btn btn-primary mx-auto mt-2" data-toggle="modal" data-target="#exampleModal">
+            Procesar pago
+        </a>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel" style="text-align: center;">Datos del pago</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="get" action="{{route('pagado')}}" name="form1"  onsubmit="return validar_pago()">
+                            <input type="hidden" name="id" value="{{Auth::user()->id}}">
+                            <div class="form-row">
+                                <div class="col-md-6 mb-3">
+                                    <label>Nombre</label>
+                                    <input type="text" id="nombre" class="form-control" value="{{(Auth::user()->nombre)}}" required onchange="quitarError('nombreHelp')">
+                                    <small style="visibility: hidden;" id="nombreHelp" class="form-text text-danger">Campo alfanumérico y obligatorio</small>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label>Teléfono</label>
+                                    <input type="text" id="telefono" class="form-control" value="{{(Auth::user()->telefono)}}" required onchange="quitarError('telefonoHelp')">
+                                    <small style="visibility: hidden;" id="telefonoHelp" class="form-text text-danger">Campo alfanumérico y obligatorio</small>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-12 mb-3">
+                                    <label>Dirección</label>
+                                    <input type="text" id="direccion" class="form-control" placeholder="Dirección" required name="direccion" onchange="quitarError('direccionHelp')">
+                                    <small style="visibility: hidden;" id="direccionHelp" class="form-text text-danger">Campo alfanumérico y obligatorio</small>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-row">
+                                <div class="col-md-12 mb-3">
+                                    <label>Número de la tarjeta</label>
+                                    <input type="text" name='text1' id="num_card" class="form-control" placeholder="Número tarjeta" required onchange="quitarError('num_cardHelp')">
+                                    <small style="visibility: hidden;" id="num_cardHelp" class="form-text text-danger">Campo alfanumérico y obligatorio</small>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <h5>Fecha de caducidad</h5>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 mb-3">
+                                    <label>Mes</label>
+                                    <input type="text" id="mes" class="form-control" placeholder="Mes" required onchange="quitarError('mesHelp')">
+                                    <small style="visibility: hidden;" id="mesHelp" class="form-text text-danger">Campo alfanumérico y obligatorio</small>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label>Año</label>
+                                    <input type="text" id="year" class="form-control" placeholder="Año" required onchange="quitarError('yearHelp')">
+                                    <small style="visibility: hidden;" id="yearHelp" class="form-text text-danger">Campo alfanumérico y obligatorio</small>
+                                </div>
+
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-2 mx-auto">
+                                    <label>CVV</label>
+                                    <input type="text" id="cvv" class="form-control" placeholder="CVV" required onchange="quitarError('cvvHelp')">
+                                    <small style="visibility: hidden;" id="cvvHelp" class="form-text text-danger">Campo alfanumérico y obligatorio</small>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" id="Ingresar" class="btn btn-primary" style="color: white">Pagar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
-
 </div>
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        $("#hide").click(function() {
-            $("#element").hide();
-        });
-        $("#show").click(function() {
-            $("#element").show();
-        });
-    });
-</script>
-
-
 @endsection

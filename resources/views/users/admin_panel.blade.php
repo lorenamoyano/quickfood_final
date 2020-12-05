@@ -1,69 +1,55 @@
 @extends('layouts.app')
 
 @section('content')
-@if(Auth::user() && Auth::user()->perfil == "admin")
-<div class="container" id="contenedor">
-</div>
-<div id="result"></div>
-<div class="row justify-content-center">
-    <div class="col-md-10">
-        <br>
-        <div class="col-md-12">
-        <input class="form-control my-3" type='text' id='txt_searchall' placeholder='Buscar usuario'>
-        </div>
-        <div>
-            <table class="col-md-12 table_admin">
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Apellidos</th>
-                        <th>DNI</th>
-                        <th>Teléfono</th>
-                        <th>Email</th>
-                        <th>Ciudad</th>
-                        <th>Perfil</th>
-                        <th>Unido hace...</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <form method="POST" action="{{ route('perfil') }}">
-                        @csrf
-                        <!-- si no se pone da un error de que la página ha expirado -->
-                        <input id="id" type="hidden" name="id" value="" />
-                        <input id="perfil" type="hidden" name="perfil" value="" />
-                    </form>
 
-                    @foreach($user as $user)
-                    <tr>
+<div class="container" id="contenedor"></div>
+<br />
+<div class="container">
+    <h3 align="center">Panel de administración</h3><br />
+    <div class="row">
+        <div class="col-sm-9">
 
-                        <td> {{ $user->nombre }} </td>
-                        <td> {{ $user->apellido1 }} {{$user->apellido2}} </td>
-                        <td> {{ $user->DNI }} </td>
-                        <td> {{ $user->telefono }} </td>
-                        <td> {{ $user->email }} </td>
-                        <td> {{ $user->ciudad }} </td>
-                        <td>
-                            <select class="custom-select" id="{{ $user->id }}" data-id="{{ $user->id }}">
-                                <option value="admin"> Administrador </option>
-                                <option value="repartidor" @if( $user->perfil == "repartidor") selected @endif > Repartidor </option>
-                                <option value="user" @if( $user->perfil == "user") selected @endif > Cliente </option>
-                            </select>
-                        </td>
-                        <td>{{ $diff = Carbon\Carbon::parse($user->created_at)->diffForHumans(Carbon\Carbon::now()) }}</td>
-                        
-                        <td><a href="{{ route('delete' , ['id' => $user->id]) }}"><i class="fa fa-trash" style="color:red"></i></a></td>
-                    </tr>
-                    
-                    @endforeach
-            </table>
         </div>
-        <br>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <input type="text" name="search" id="search" class="form-control" />
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive col-sm-12">
+        <table class="table_admin col-sm-12">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>DNI</th>
+                    <th>Teléfono</th>
+                    <th>Email</th>
+                    <th>Ciudad</th>
+                    <th>Perfil</th>
+                    <th>Unido hace...</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <form method="get" action="{{ route('perfil') }}">
+                    @csrf
+                    <!-- si no se pone da un error de que la página ha expirado -->
+                    <input id="id" type="hidden" name="id" value="" />
+                    <input id="perfil" type="hidden" name="perfil" value="" />
+                </form>
+                @include('users.pagination_data')
+            </tbody>
+        </table>
+        <div colspan="3" align="center" style="margin-top: 2em;">
+            {!! $data->links() !!}
+        </div>
+        <input type="hidden" name="hidden_page" id="hidden_page" value="1" />
+        <input type="hidden" name="hidden_column_name" id="hidden_column_name" value="id" />
+        <input type="hidden" name="hidden_sort_type" id="hidden_sort_type" value="asc" />
     </div>
 </div>
 
-</div>
-</div>
 
 <script>
     $(document).ready(function() {
@@ -78,37 +64,47 @@
         });
     });
 </script>
-<script type='text/javascript'>
+<script>
     $(document).ready(function() {
 
-        // Search all columns
-        $('#txt_searchall').keyup(function() {
-            var search = $(this).val();
+        function fetch_data(page, sort_type, sort_by, query) {
+            $.ajax({
+                url: "pagination/fetch_data?page=" + page + "&sortby=" + sort_by +
+                    "&sorttype=" + sort_type + "&query=" + query,
+                success: function(data) {
+                    $('tbody').html('');
+                    $('tbody').html(data);
+                }
+            })
+        }
 
-            $('table tbody tr').hide();
-
-            var len = $('table tbody tr:not(.notfound) td:contains("' + search + '")').length;
-
-            if (len > 0) {
-                $('table tbody tr:not(.notfound) td:contains("' + search + '")').each(function() {
-                    $(this).closest('tr').show();
-                });
-            }
-
+        $(document).on('keyup', '#search', function() {
+            var query = $('#search').val();
+            var column_name = $('#hidden_column_name').val();
+            var sort_type = $('#hidden_sort_type').val();
+            var page = $('#hidden_page').val();
+            fetch_data(page, sort_type, column_name, query);
         });
-    });
-    // Case-insensitive searching (Note - remove the below script for Case sensitive search )
-    $.expr[":"].contains = $.expr.createPseudo(function(arg) {
-        return function(elem) {
-            return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
-        };
+
+
+
+        $(document).on('click', '.admin_panel a', function(event) {
+            event.preventDefault();
+            var page = $(this).attr('href').split('page=')[1];
+            $('#hidden_page').val(page);
+            var column_name = $('#hidden_column_name').val();
+            var sort_type = $('#hidden_sort_type').val();
+
+            var query = $('#search').val();
+
+            $('li').removeClass('active');
+            $(this).parent().addClass('active');
+            fetch_data(page, sort_type, column_name, query);
+        });
+
     });
 </script>
 
-@else
-<div class="alert alert-danger">
-    {{ ('No tienes permisos para ver esta página') }}
-</div>
-@endif
+
 
 @endsection

@@ -1,0 +1,37 @@
+.restaurant-grid {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.restaurant-grid__item {
+  width: 100%;
+}
+
+@media (min-width: 800px) {
+  .restaurant-grid__item {
+    width: 50%;
+  }
+}
+
+@media (min-width: 1020px) {
+  .restaurant-grid__item {
+    width: 33%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .restaurant-grid__item {
+    width: 25%;
+  }
+}
+/*# sourceMappingURL=carta.css.map */
