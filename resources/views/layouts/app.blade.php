@@ -85,14 +85,7 @@
                             {{ __('Nosotros') }}
                         </a>
                     </li>
-                    <li>
-                        @if (Auth::user() && Auth::user()->perfil === 'user')
-                        <a class="dropdown-item" href="{{ route('historial' , ['id' => Auth::user()->id]) }}">
-                            Historial de compra
-                        </a>
-                        @endif
-
-                    </li>
+                    
 
                     <li>
                         @if (Auth::user()->perfil === 'admin')

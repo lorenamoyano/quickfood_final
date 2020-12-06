@@ -8,10 +8,11 @@
         <div class="col-md-10">
             <div class="container">
                 <div class="row">
+                @if($show_pedido->count() > 0)
                     <div id="invoice-POS">
-
+                        
                         <table>
-                        <div style="display: none;">{{ $total = 0 }}</div>
+                            <div style="display: none;">{{ $total = 0 }}</div>
                             <center id="top">
                                 <div class="logo"></div>
                                 <div class="info">
@@ -19,16 +20,30 @@
                                 </div>
                             </center>
                             <tr class="tabletitle">
-                                <th class="item"><h2 class="center">Fecha</h2></th>
-                                <th class="item"><h2 class="center">Producto</h2></th>
-                                <th class="item"><h2 class="center">Cantidad</h2></th>
-                                <th class="item"><h2 class="center">Total</h2></th>
+                                <th class="item">
+                                    <h2 class="center">Fecha</h2>
+                                </th>
+                                <th class="item">
+                                    <h2 class="center">Producto</h2>
+                                </th>
+                                <th class="item">
+                                    <h2 class="center">Cantidad</h2>
+                                </th>
+                                <th class="item">
+                                    <h2 class="center">Total</h2>
+                                </th>
                             </tr>
                             @foreach($show_pedido as $historial_user)
                             <tr class="service">
-                                <td class="tableitem"><p class="itemtext" id="center">{{$historial_user->fecha}}</p></td>
-                                <td class="tableitem"><p class="itemtext">{{$historial_user->nombre}}</p></td>
-                                <td class="tableitem"><p class="itemtext" id="center">{{$historial_user->cantidad}}</p></td>
+                                <td class="tableitem">
+                                    <p class="itemtext" id="center">{{$historial_user->fecha}}</p>
+                                </td>
+                                <td class="tableitem">
+                                    <p class="itemtext">{{$historial_user->nombre}}</p>
+                                </td>
+                                <td class="tableitem">
+                                    <p class="itemtext" id="center">{{$historial_user->cantidad}}</p>
+                                </td>
                                 <td class="tableitem">
                                     <p class="itemtext" id="center">{{number_format($historial_user->cantidad * $historial_user->precio,2)}}€</p>
                                 </td>
@@ -52,23 +67,30 @@
                                 <td class="Rate">
                                     <h2 class="pad" id="center">IVA</h2>
                                 </td>
-                                <td></td><td></td>
+                                <td></td>
+                                <td></td>
                                 <td class="payment">
                                     <h2 class="center1">{{number_format(($total)*0.21,2)}}€</h2>
                                 </td>
-                                
+
                             </tr>
                             <tr class="tabletitle">
                                 <td class="Rate">
                                     <h2 class="pad" id="center">Total</h2>
                                 </td>
-                                <td></td><td></td>
+                                <td></td>
+                                <td></td>
                                 <td class="payment">
                                     <h2 class="center1">{{number_format ($total+1,2)}}€</h2>
                                 </td>
-                                
+
                             </tr>
                         </table>
+                        @else
+                        <div class="alert alert-danger col-sm-5 mx-auto">
+                            {{ ('No tienes ningún pedido este día') }}
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
