@@ -1,4 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
+@import url(../../resources/sass/gallery.css);
+@import url(../../resources/sass/ticket.css);
+@import url(../../resources/sass/carta.css);
 
 /*!
  * Bootstrap v4.5.2 (https://getbootstrap.com/)

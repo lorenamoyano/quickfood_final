@@ -4,7 +4,7 @@
 <div class="container" id="contenedor"></div>
 <br>
 
-<div class="restaurant-grid col-sm-12 mx-auto" id="table_data">
+<div class="restaurant-grid mx-auto" id="table_data">
     @foreach($data as $cartas)
     <div class="restaurant-grid__item">
         <div class="card">

@@ -28,12 +28,12 @@ class AdminController extends Controller
                 ->where('id', 'like', '%' . $query . '%')
                 ->orWhere('nombre', 'like', '%' . $query . '%')
                 ->orWhere('ciudad', 'like', '%' . $query . '%')
-                ->orWhere('apellido1' , 'like' , '%' . $query . '%')
-                ->orWhere('apellido2' , 'like' , '%' . $query . '%')
-                ->orWhere('telefono' , 'like' , '%' . $query . '%')
-                ->orWhere('DNI' , 'like' , '%' . $query . '%')
-                ->orWhere('email' , 'like' , '%' . $query . '%')
-                ->orWhere('perfil' , 'like' , '%' . $query . '%')
+                ->orWhere('apellido1', 'like', '%' . $query . '%')
+                ->orWhere('apellido2', 'like', '%' . $query . '%')
+                ->orWhere('telefono', 'like', '%' . $query . '%')
+                ->orWhere('DNI', 'like', '%' . $query . '%')
+                ->orWhere('email', 'like', '%' . $query . '%')
+                ->orWhere('perfil', 'like', '%' . $query . '%')
                 ->orderBy($sort_by, $sort_type)
                 ->paginate(3);
             //dd($data);
@@ -43,7 +43,7 @@ class AdminController extends Controller
 
     public function perfil(Request $id)
     {
-       $tabla= DB::table('cliente')->where('id', $id->input('id'))->update(['perfil' => $id->input('perfil')]);
+        $tabla = DB::table('cliente')->where('id', $id->input('id'))->update(['perfil' => $id->input('perfil')]);
         //dd($tabla);
         $data = DB::table('cliente')->paginate(3);
         return view('users.admin_panel', ['data' => $data]);
@@ -113,5 +113,24 @@ class AdminController extends Controller
 
         $producto->save();
         return redirect()->route('ver');
+    }
+
+    public function chartJS()
+    {
+        $record = DB::table('compra')
+            ->join('cliente', 'cliente.id', '=', 'compra.idClien')
+            ->select(DB::raw('count(*) as total'), 'cliente.nombre')
+            ->groupBy('compra.idClien', 'cliente.nombre')
+            ->get();
+
+        $data = [];
+
+        foreach ($record as $row) {
+            $data['label'][] = $row->nombre;
+            $data['data'][] = (int) $row->total;
+        }
+
+        $data['chart_data'] = json_encode($data);
+        return view('users.chartJS', $data);
     }
 }

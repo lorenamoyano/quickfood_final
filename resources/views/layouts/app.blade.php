@@ -86,9 +86,11 @@
                         </a>
                     </li>
                     <li>
+                        @if (Auth::user() && Auth::user()->perfil === 'user')
                         <a class="dropdown-item" href="{{ route('historial' , ['id' => Auth::user()->id]) }}">
                             Historial de compra
                         </a>
+                        @endif
 
                     </li>
 
@@ -107,7 +109,7 @@
 
                         @if (Auth::user()->perfil === 'repartidor')
                         <a class="dropdown-item" href="{{ route('ver_reparto' , ['id' => Auth::user()->id]) }}">
-                        <i class="fas fa-motorcycle" style="color:black"></i>
+                            <i class="fas fa-motorcycle" style="color:black"></i>
                         </a>
                         @endif
 

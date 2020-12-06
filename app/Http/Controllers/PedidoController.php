@@ -161,7 +161,7 @@ class PedidoController extends Controller
         return view ('users.historial' , ['historial' => $historial]);
     }*/
 
-    public function historial($fecha) {
+    /*public function historial($fecha) {
         $id = Auth::user()->id;
         $historial = DB::table('pedido')->join('carta' , 'carta.id' , '=' , 'pedido.idCar')
                                         ->select('pedido.fecha' , 'carta.precio', 'carta.nombre' , 'pedido.cantidad' , 'pedido.pago')
@@ -169,6 +169,48 @@ class PedidoController extends Controller
                                         ->where('pago' , '=' , '1')
                                         ->get();
         return view ('users.historial' , ['historial' => $historial]);
+    }*/
+
+    public function historial() {
+        $id = Auth::user()->id;
+        $historial = DB::table('pedido')->join('carta' , 'carta.id' , '=' , 'pedido.idCar')
+                                        ->select('pedido.fecha')
+                                        ->where('idCliente' , '=' , $id)
+                                        ->where('pago' , '=' , '1')
+                                        ->groupBy('fecha')
+                                        ->get();
+                                        //dd($historial);
+        return view ('users.historial' , ['historial' => $historial]);
+    }
+
+    /*public function show_pedido($fecha) {
+        $fecha = $fecha;
+        dd($fecha);
+        $id = Auth::user()->id;
+        //dd($id);
+        $show_pedido = DB::table('pedido')->join('carta' , 'carta.id' , '=' , 'pedido.idCar')
+                                        ->select('pedido.fecha' , 'carta.precio', 'carta.nombre' , 'pedido.cantidad')
+                                        ->where('idCliente' , '=' , $id)
+                                        ->where('pago' , '=' , '1')
+                                        ->where('pedido.fecha' , '=' , $fecha)
+                                        ->get();
+                                        //dd($show_pedido);
+        return view ('users.show_pedido' , ['show_pedido' => $show_pedido]);
+    }*/
+
+    public function show_pedido(Request $request) {
+        $fecha = $request->fecha;
+        //dd($fecha);
+        $id = Auth::user()->id;
+        //dd($id);
+        $show_pedido = DB::table('pedido')->join('carta' , 'carta.id' , '=' , 'pedido.idCar')
+                                        ->select('pedido.fecha' , 'carta.precio', 'carta.nombre' , 'pedido.cantidad')
+                                        ->where('idCliente' , '=' , $id)
+                                        ->where('pago' , '=' , '1')
+                                        ->where('pedido.fecha' , '=' , $fecha)
+                                        ->get();
+                                        //dd($show_pedido);
+        return view ('users.show_pedido' , ['show_pedido' => $show_pedido]);
     }
 
 

@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<link href="{{ asset('../resources/sass/ticket.css') }}" rel="stylesheet">
 
 <div class="container" id="contenedor">
 </div>
@@ -100,7 +99,7 @@
             Procesar pago
         </a>
         @endif
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div data-backdrop="static" data-keyboard="false" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">

@@ -34,7 +34,25 @@
             <a type="button" data-toggle="modal" data-target="#myModal-{{ $user->id }}">
                 <i class="fas fa-edit" style="color:blue" style="text-align: right;"></i>
             </a>
-
+            <div class="row">
+                <form action="{{route('show_pedido')}}" method="post">
+                    @csrf
+                    <div class="input-group date" data-provide="datepicker">
+                        <input type="text" class="form-control datepicker" name="fecha">
+                    </div>
+                    <button type="submit" class="btn btn-default btn-primary">Enviar</button>
+                </form>
+            </div>
+            <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+            <link rel="stylesheet" href="/resources/demos/style.css">
+            <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+            <script>
+                $('.datepicker').datepicker({
+                    dateFormat: 'yy-mm-dd',
+                    startDate: '-3d'
+                });
+            </script>
             <!-- Modal -->
             <div data-backdrop="static" data-keyboard="false" class="modal fade" id="myModal-{{ $user->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">

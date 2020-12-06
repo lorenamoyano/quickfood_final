@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+@if(Auth::user()&&Auth::user()->perfil === "admin")
 <div class="container" id="contenedor"></div>
 <br />
 <div class="container">
@@ -105,6 +105,10 @@
     });
 </script>
 
-
+@else
+<div class="alert alert-danger col-sm-5 mx-auto">
+    {{ ('No tienes permisos para ver esta página') }}
+</div>
+@endif
 
 @endsection

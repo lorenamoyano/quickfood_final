@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-
+@if(@guest || Auth::user()->perfil != "repartidor")
 
 <div class="row justify-content-center">
 <!--Buscador -->
@@ -87,6 +87,10 @@
 
     });
 </script>
-
+@else
+<div class="alert alert-danger col-sm-5 mx-auto">
+    {{ ('No tienes permisos para ver esta página') }}
+</div>
+@endif
 
 @endsection
