@@ -15,7 +15,7 @@
             @if(Auth::user()->avatar)
             <img src="{{ url('/user/avatar/'.Auth::user()->avatar) }}" class="avatar">
             @else
-            <img src="{{asset('img/user.png')}}" class="avatar">
+            <img src="{{asset('img/dibujo.svg')}}" class="avatar">
             @endif
             <br>
             {{$user->nombre}}
@@ -60,7 +60,7 @@
                                             @if(Auth::user()->avatar)
                                             <img src="{{ url('/user/avatar/'.Auth::user()->avatar) }}" class="avatar">
                                             @else
-                                            <img src="{{asset('img/user.png')}}" class="avatar">
+                                            <img src="{{asset('img/dibujo.svg')}}" class="avatar">
                                             @endif
                                         </div>
                                         <div class="col-sm-10 mt-3">

@@ -13,7 +13,7 @@
 
                     <table>
                         <div style="display: none;">{{ $total = 0 }}</div>
-
+                        
                         <center id="top">
                             <div class="logo"></div>
                             <div class="info">
@@ -21,6 +21,7 @@
                             </div>
                         </center>
                         <table>
+                        
                             <tr class="tabletitle">
                                 <th class="item">
                                     <h2 class="center">Producto</h2>
@@ -33,7 +34,9 @@
                                 </th>
                                 <th></th>
                             </tr>
+                            
                             @foreach($pedido as $pedidos)
+                            
                             <tr class="service">
                                 <td class="tableitem">
                                     <p class="itemtext">{{$pedidos->nombre}}</p>
@@ -48,6 +51,7 @@
                             </tr>
                             <div style="display: none">{{ ($total += $pedidos->precio*$pedidos->cantidad)}}</div>
                             @endforeach
+                            @if($total > 0)
                             <tr>
                                 <td class="tableitem">
                                     <p class="itemtext">Reparto</p>
@@ -57,6 +61,7 @@
                                     <p class="itemtext" id="center">1.00€</p>
                                 </td>
                             </tr>
+                            
                             <tr class="tabletitle">
 
                                 <td class="Rate">
@@ -64,7 +69,7 @@
                                 </td>
                                 <td></td>
                                 <td class="payment">
-                                    <h2 class="center1">{{number_format(($total+1)*0.21,2)}}€</h2>
+                                    <h2 class="center1">{{number_format(($total)*0.21,2)}}€</h2>
                                 </td>
                                 <td></td>
                             </tr>
@@ -78,14 +83,23 @@
                                 </td>
                                 <td></td>
                             </tr>
+                            
+                            @else
+                            <br>
+                            <tr class="tabletitle">
+                                <h2 class="text-center">Aún no has añadido nada al carrito</h2>
+                            </tr>
+                            @endif
                         </table>
                 </div>
                 <!--End Table-->
             </div>
         </div>
+        @if($pedido->count()>0)
         <a type="button" class="btn btn-primary mx-auto mt-2" data-toggle="modal" data-target="#exampleModal">
             Procesar pago
         </a>
+        @endif
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -96,7 +110,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form method="get" action="{{route('pagado')}}" name="form1"  onsubmit="return validar_pago()">
+                        <form method="get" action="{{route('pagado')}}" name="form1"  onsubmit="return validar_pago()" onsubmit="sonido()">
                             <input type="hidden" name="id" value="{{Auth::user()->id}}">
                             <div class="form-row">
                                 <div class="col-md-6 mb-3">
@@ -150,7 +164,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                <button type="submit" id="Ingresar" class="btn btn-primary" style="color: white">Pagar</button>
+                                <button type="submit" id="Ingresar" class="btn btn-primary reproductor" style="color: white" onclick="sonido()"><audio id="audio" src="{{asset('sound/success.mp3')}}"></audio>Pagar</button>
                             </div>
                         </form>
                     </div>

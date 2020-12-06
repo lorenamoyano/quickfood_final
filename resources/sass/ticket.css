@@ -4,7 +4,7 @@
   padding: 4%;
   margin: 0 auto;
   width: 600px;
-  background: #FFF;
+  background: #ffffff;
 }
 
 #invoice-POS ::-moz-selection {
@@ -48,10 +48,10 @@
 }
 
 #invoice-POS #top .logo {
-  height: 60px;
-  width: 60px;
-  background: url(http://michaeltruong.ca/images/logo1.png) no-repeat;
-  background-size: 60px 60px;
+  height: 100px;
+  width: 100px;
+  background: url("http://localhost/quickfood/quickfood/public/img/dibujo.svg") no-repeat;
+  background-size: 100px 100px;
 }
 
 #invoice-POS .info {

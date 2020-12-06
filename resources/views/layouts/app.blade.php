@@ -49,6 +49,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm" id="navbar">
             <div class="container">
                 <input type="hidden" name="_token" value="{{ Session::token() }}">
+                <img src="{{asset('img/dibujo.svg')}}" class="redimension">
                 <a class="navbar-brand" href="{{ route('home') }}">Inicio</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
