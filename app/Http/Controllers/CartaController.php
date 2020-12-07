@@ -20,7 +20,10 @@ class CartaController extends Controller
 {
 
     /**
-     * FUNCIÓN QUE MUESTRA TODA LA CARTA DEL RESTAURANTE
+     * View all the menu in the database
+     * 
+     * @param 
+     * @return view carta
      */
     public function ver()
     {
@@ -29,57 +32,18 @@ class CartaController extends Controller
         return view('carta.carta', ['data' => $data])->render();
     }
 
-    public function index()
+    /**
+     * View the search's result
+     * 
+     * @param req product's name, product's price, product's description
+     * @return view carta
+     */
+
+    function card_data(Request $request)
     {
-        $carta = DB::table('carta')->get();
-        return view('carta.carta' , ['carta' => $carta]);
-    }
-
-
-    function card_data(Request $request) {
         if ($request->ajax()) {
-            /*$sort_by = $request->get('sortby');
-      $sort_type = $request->get('sorttype');
-            $query = $request->get('query');
-            $query = str_replace(" ", "%", $query);*/
-            $data = DB::table('carta')
-                /*->where('nombre', 'like', '%' . $query . '%')*/
-                ->paginate(8);
+            $data = DB::table('carta')->paginate(8);
             return view('carta.pagination_card', ['data' => $data])->render();
         }
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function autocomplete(Request $request)
-    {
-        //$id = $request;
-        
-        $res = DB::table('carta')->select("id" , "nombre")
-            ->where("nombre", "LIKE", "%{$request->term}%")
-            ->get();
-
-        return response()->json($res);
-        
-        /*([
-            'res' => $res,
-            'id' => $id
-        ]);*/
-    }
-
-    public function product_show ($id) {
-        $producto = Carta::find($id)->get();
-        $producto = Carta::select('nombre' , 'precio' , 'descripcion')->where("id", "LIKE", "{$id}")->get();
-        return view('carta.product' , ['producto' => $producto]);
-    }
-
-    public function cesta(Request $id) {
-        $user = Auth::user();
-        $producto = Carta::find($id);
-        return view ('carta.cesta' , ['producto' => $producto]);
-    }
-
 }

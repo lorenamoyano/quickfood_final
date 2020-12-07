@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,11 +69,6 @@ Route::get('pagination/fetch_data', [App\Http\Controllers\PaginationController::
  * CARD'S MENU
  */
 Route::get('/ver',  [App\Http\Controllers\CartaController::class, 'ver'])->name('ver');
-Route::get('/buscar/{nombre?}' , [App\Http\Controllers\CartaController::class, 'buscar'])->name('buscar');
-Route::get('/search1', [App\Http\Controllers\CartaController::class, 'index'])->name('search')->middleware('auth');
-Route::get('/autocomplete', [App\Http\Controllers\CartaController::class, 'autocomplete'])->name('autocomplete')->middleware('auth');
-Route::get('/product/{id?}', [App\Http\Controllers\CartaController::class, 'product_show'])->name('product')->middleware('auth');
-Route::get('/cesta' , [App\Http\Controllers\CartaController::class, 'cesta'])->name('cesta')->middleware('auth');
 Route::post('/producto/add' ,  [App\Http\Controllers\PedidoController::class, 'add'])->name('producto.add')->middleware('auth');
 Route::get('/carrito/{id}' , [App\Http\Controllers\PedidoController::class, 'carrito'])->name('carrito')->middleware('auth');
 Route::get('/pedido/borrar/{id}' ,  [App\Http\Controllers\PedidoController::class, 'borrar'])->name('pedido.borrar')->middleware('auth');
@@ -97,3 +93,16 @@ Route::get('/producto/borrar/{id}' ,  [App\Http\Controllers\AdminController::cla
 Route::post('/product/update' , [App\Http\Controllers\AdminController::class, 'edit_product'])->name('producto.update')->middleware('auth');
 Route::get('/edit/{id}' , [App\Http\Controllers\AdminController::class, 'view_edit'])->name('product.update')->middleware('auth');
 Route::get('/chart' , [App\Http\Controllers\AdminController::class, 'chartJS'])->name('chart')->middleware('auth');
+
+/**
+ * API'S ROUTES
+ */
+
+Route::middleware('auth:api')->get('/user', function(Request $request) {
+    return $request->user();
+});
+
+Route::get('productos', [App\Http\Controllers\ApiController::class, 'product'])->middleware('auth');
+Route::get('producto/{id}', [App\Http\Controllers\ApiController::class, 'producto'])->middleware('auth');
+Route::get('clientes', [App\Http\Controllers\ApiController::class, 'usuarios'])->middleware('auth');
+Route::get('cliente/{id}', [App\Http\Controllers\ApiController::class, 'usuario'])->middleware('auth');

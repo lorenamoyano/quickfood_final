@@ -8,6 +8,9 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class RegisterController extends Controller
 {
@@ -51,14 +54,14 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'nombre' => ['required', 'string', 'max:250'],
-            'apellido1' => ['required' , 'string' , 'max:100'],
-            'apellido2' => ['required' , 'string' , 'max:100'],
-            'DNI' => ['required' , 'string' , 'max:9' , 'unique:cliente'],
-            'telefono' => ['required' , 'string' , 'max:9' , 'unique:cliente'],
+            'apellido1' => ['required', 'string', 'max:100'],
+            'apellido2' => ['required', 'string', 'max:100'],
+            'DNI' => ['required', 'string', 'max:9', 'unique:cliente'],
+            'telefono' => ['required', 'string', 'max:9', 'unique:cliente'],
             'email' => ['required', 'string', 'email', 'max:100', 'unique:cliente'],
             'password' => ['required', 'string', 'min:4', 'confirmed'],
-            'ciudad' => ['required' , 'string' , 'max:50'],
-            //'avatar' => ['required' , 'blob']
+            'ciudad' => ['required', 'string', 'max:50'],
+            //'avatar' => ['required', 'string']
         ]);
     }
 
@@ -79,7 +82,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'ciudad' => $data['ciudad'],
-            //'avatar' => $data['avatar'],
+            'rememberToken' => Str::random(60),
         ]);
     }
 }

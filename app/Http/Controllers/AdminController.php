@@ -10,12 +10,27 @@ use App\Models\Carta;
 
 class AdminController extends Controller
 {
+    /**
+     * View all users in the database
+     * 
+     * @param 
+     * @return view admin_panel
+     */
+
     public function admin_panel()
     {
         $data = DB::table('cliente')->paginate(3);
         return view('users.admin_panel',  ['data' => $data]);
     }
 
+
+    /**
+     * Search users in the database
+     * 
+     * @param req user's name, user' surname, user's city, 
+     *            user's phone, user's dni, user's profile and user's email
+     * @return view search result
+     */
 
     function fetch_data(Request $request)
     {
@@ -41,6 +56,13 @@ class AdminController extends Controller
         }
     }
 
+    /**
+     * Change the user's type
+     * 
+     * @param req user's id
+     * @return view admin_panel
+     */
+
     public function perfil(Request $id)
     {
         $tabla = DB::table('cliente')->where('id', $id->input('id'))->update(['perfil' => $id->input('perfil')]);
@@ -49,6 +71,12 @@ class AdminController extends Controller
         return view('users.admin_panel', ['data' => $data]);
     }
 
+    /**
+     * Delete an user in the database
+     * 
+     * @param req user's id
+     * @return view panel admin
+     */
 
     public function delete_user(Request $id)
     {
@@ -57,10 +85,24 @@ class AdminController extends Controller
         return view('users.admin_panel', ['data' => $data]);
     }
 
+
+    /**
+     * View product's add page
+     * 
+     * @param 
+     * @return view product add
+     */
     public function anadir()
     {
         return view('carta.add_producto');
     }
+
+    /**
+     * Add a product to the database
+     * 
+     * @param req product's name, product's price, product's description
+     * @return view all products
+     */
 
     public function add_carta(Request $data)
     {
@@ -82,6 +124,13 @@ class AdminController extends Controller
         return redirect()->route('ver');
     }
 
+    /**
+     * Delete a product to the database
+     * 
+     * @param id product
+     * @return view all products
+     */
+
     public function delete_product($id)
     {
         $producto = Carta::find($id);
@@ -90,11 +139,25 @@ class AdminController extends Controller
         return redirect()->route('ver');
     }
 
+    /**
+     * Edit an product in the database
+     * 
+     * @param req id
+     * @return view edit product
+     */
+
     public function view_edit($id)
     {
         $producto = Carta::find($id)->where("id", "LIKE", "$id")->get();
         return view('carta.edit_producto', ['producto' => $producto]);
     }
+
+    /**
+     * Edit a product in the database
+     * 
+     * @param req product's name, product's price, product's description
+     * @return view all products
+     */
 
     public function edit_product(Request $request)
     {
@@ -114,6 +177,13 @@ class AdminController extends Controller
         $producto->save();
         return redirect()->route('ver');
     }
+
+    /**
+     * View a chart with the user' shoppings
+     * 
+     * @param 
+     * @return view admin chart
+     */
 
     public function chartJS()
     {
