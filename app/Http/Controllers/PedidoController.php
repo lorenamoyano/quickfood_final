@@ -9,35 +9,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Carta;
 use App\Models\Pedido;
 use App\Models\Compra;
-use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Carbon;
 
 class PedidoController extends Controller
 {
 
-    /*public function add(Request $request){
-        $request->validate([
-            'cantidad' => ['required', 'numeric'],
-            'fecha' => ['required' , 'date']
-        ]) ;
-        $id = $request->input('id');
-        $cantidad = $request->input('cantidad');
-        $fecha = $request->input('fecha');
-        Pedido::create([
-            'idCliente' => Auth::user()->id,
-            'idCar' => $id,
-            'cantidad' => $cantidad,
-            'fecha' => $fecha,
-        ]);
-        return redirect()->route('ver',['id' => $id]) ;
-    }*/
-
+    /**
+     * Add a product to the shopping cart
+     * 
+     * @param req product's quantity, product's create date
+     * @return view carta
+     */
     public function add(Request $request){
         $request->validate([
             'cantidad' => ['required', 'numeric'],
@@ -67,46 +53,13 @@ class PedidoController extends Controller
         
     }
 
-    /*public function add(Request $request){
-        $request->validate([
-            'cantidad' => ['required', 'numeric']
-        ]) ;
-        $id = $request->input('id');
-        
-        $pedido1 = Pedido::create([
-            'idCliente' => Auth::user()->id,
-        ]);
-        $idPedido = DB::table('pedido')->latest('id')->first();
-        $pedido2 = PedidoCarta::create([
-            'idPedido' => $idPedido->id,
-            'idCarta' => $id,
-        ]);
-        $carta = DB::table('carta')->get();
-        return view('carta.carta' , ['carta' => $carta]);
-    }*/
 
-
-
-    public function carrito($id) {
-        $carrito = DB::table('pedido')->join('cliente' , 'cliente.id' , '=' , 'pedido.idCliente')
-                                      ->join('carta' , 'carta.id' , '=' , 'pedido.idCar')
-                                      ->select('cliente.*' , 'carta.*', 'pedido.*')
-                                      ->where('idCliente' , '=' , $id)->where('pedido.pago' , '=' , 0)
-                                      ->get();
-        return view('carta.carrito' , ['carrito' => $carrito]);
-        
-    }
-
-    /*public function carrito($id) {
-        $carrito = DB::table('pedido')->join('cliente' , 'cliente.id' , '=' , 'pedido.idCliente')
-                                      ->join('pedido_carta' , 'pedido_carta.idPedido' , '=' , 'pedido.id')
-                                      ->join('carta' , 'carta.id' , '=' , 'pedido_carta.idCarta')
-                                      ->select('cliente.*' , 'carta.*', 'pedido.*' , 'pedido_carta.*')
-                                      ->where('idCliente' , '=' , $id)
-                                      ->get();
-        return view('carta.carrito' , ['carrito' => $carrito]);
-        
-    }*/
+    /**
+     * Delete a product from the shopping cart
+     * 
+     * @param id
+     * @return view shopping cart
+     */
 
     public function borrar($id) {
         $user = Auth::user()->id;
@@ -115,22 +68,12 @@ class PedidoController extends Controller
         return redirect()->route('pedido.pagar' , $user);
     }
 
-    /*public function borrar($id) {
-        $user = Auth::user()->id;
-        $pedido = Pedidocarta::select('pedido_carta.idPedido')
-        ->join('pedido' , 'pedido.id' , '=' , 'pedido_carta.idPedido')
-        ->join('carta' , 'carta.id' , '=' , 'pedido_carta.idCarta')
-        ->where('pedido_carta.id', '=' , $id)->get();
-        //dd($pedido);
-        //$idPedido = DB::table('pedido_carta')->select('pedido_carta.idPedido')->first($pedido);
-        //$idPedido = DB::table('pedido_carta')->select('pedido_carta.idPedido')->where('idPedido' , '=' , '')->first($pedido);
-        $idPedido = DB::table('pedido_carta')->select('pedido_carta.idPedido')->get($pedido);
-        dd($idPedido);
-        $borrar = Pedido::where('pedido.id', '=' , $idPedido->idPedido);
-        dd($borrar);
-        //$borrar->delete();
-        return redirect()->route('carrito' , $user);
-    }*/
+    /**
+     * Show user's order and the pay form
+     * 
+     * @param id
+     * @return view carta
+     */
 
     public function pagar($id) {
         $user = Auth::user()->id;
@@ -140,79 +83,35 @@ class PedidoController extends Controller
                                       ->where('idCliente' , '=' , $id)
                                       ->where('pedido.pago' , '=' , '0')
                                       ->get();
-        //dd($pedido);
         return view('carta.pagar' , ['id' => $id , 'pedido' => $pedido]);
     }
 
-    /*public function historial ($id) {
-        $id = Auth::user()->id; //idusuario
-        $historial = DB::table('pedido')->join('cliente' , 'cliente.id' , '=' , 'pedido.idCliente')
-                                      ->join('pedido_carta' , 'pedido_carta.idPedido' , '=' , 'pedido.id')
-                                      ->join('carta' , 'carta.id' , '=' , 'pedido_carta.idCarta')
-                                      ->select('carta.nombre', 'pedido.created_at')
-                                      ->where('idCliente' , '=' , $id)
-                                      ->orderBy('pedido.created_at' , 'desc')
-                                      ->get()
-                                      ->groupBy(function($date) {
-                                        return Carbon::parse($date->created_at)->format('d-m-Y');
-                                    });
-                                      
-        //dd($historial);
-        return view ('users.historial' , ['historial' => $historial]);
-    }*/
-
-    /*public function historial($fecha) {
-        $id = Auth::user()->id;
-        $historial = DB::table('pedido')->join('carta' , 'carta.id' , '=' , 'pedido.idCar')
-                                        ->select('pedido.fecha' , 'carta.precio', 'carta.nombre' , 'pedido.cantidad' , 'pedido.pago')
-                                        ->where('idCliente' , '=' , $id)
-                                        ->where('pago' , '=' , '1')
-                                        ->get();
-        return view ('users.historial' , ['historial' => $historial]);
-    }*/
-
-    public function historial() {
-        $id = Auth::user()->id;
-        $historial = DB::table('pedido')->join('carta' , 'carta.id' , '=' , 'pedido.idCar')
-                                        ->select('pedido.fecha')
-                                        ->where('idCliente' , '=' , $id)
-                                        ->where('pago' , '=' , '1')
-                                        ->groupBy('fecha')
-                                        ->get();
-                                        //dd($historial);
-        return view ('users.historial' , ['historial' => $historial]);
-    }
-
-    /*public function show_pedido($fecha) {
-        $fecha = $fecha;
-        dd($fecha);
-        $id = Auth::user()->id;
-        //dd($id);
-        $show_pedido = DB::table('pedido')->join('carta' , 'carta.id' , '=' , 'pedido.idCar')
-                                        ->select('pedido.fecha' , 'carta.precio', 'carta.nombre' , 'pedido.cantidad')
-                                        ->where('idCliente' , '=' , $id)
-                                        ->where('pago' , '=' , '1')
-                                        ->where('pedido.fecha' , '=' , $fecha)
-                                        ->get();
-                                        //dd($show_pedido);
-        return view ('users.show_pedido' , ['show_pedido' => $show_pedido]);
-    }*/
+    /**
+     * View the order filter by date
+     * 
+     * @param req order's date
+     * @return view show_pedido with the order
+     */
 
     public function show_pedido(Request $request) {
         $fecha = $request->fecha;
-        //dd($fecha);
         $id = Auth::user()->id;
-        //dd($id);
         $show_pedido = DB::table('pedido')->join('carta' , 'carta.id' , '=' , 'pedido.idCar')
                                         ->select('pedido.fecha' , 'carta.precio', 'carta.nombre' , 'pedido.cantidad')
                                         ->where('idCliente' , '=' , $id)
                                         ->where('pago' , '=' , '1')
                                         ->where('pedido.fecha' , '=' , $fecha)
                                         ->get();
-                                        //dd($show_pedido);
         return view ('users.show_pedido' , ['show_pedido' => $show_pedido]);
     }
 
+
+    /**
+     * User pay form and update the database's column for pay
+     * 
+     * @param req user's address
+     * @return view carta
+     */
 
     public function pagado(Request $request) {
         $id = Auth::user()->id;
@@ -233,6 +132,12 @@ class PedidoController extends Controller
         return redirect()->route('ver',['id' => $id]) ;
     }
 
+    /**
+     * View all the orders that have not yet been delivered
+     * 
+     * @param 
+     * @return view ver_reparto
+     */
 
     public function ver_reparto() {
         $id = Auth::user()->id;
@@ -242,6 +147,13 @@ class PedidoController extends Controller
                                       ->get();
         return view('users.ver_reparto',['reparto' => $reparto]);
     }
+
+    /**
+     * Change the database's column "repartido" from false to true
+     * 
+     * @param req compra.id , compra.repartido
+     * @return view ver_reparto
+     */
 
     public function repartido(Request $request) {
         $request->validate([

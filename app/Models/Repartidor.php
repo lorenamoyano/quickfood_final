@@ -23,11 +23,5 @@ class Repartidor extends Model
     use HasFactory, Notifiable;
 
     public $fillable = ['idReparto','idCliente'];
-
-    /*public function getSearchResult(): SearchResult
-    {
-       return new SearchResult($this, $this->title, route('front.post.show', $this->slug));
-    }*/
-
     
 }

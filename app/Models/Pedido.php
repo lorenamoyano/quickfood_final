@@ -24,10 +24,5 @@ class Pedido extends Model
 
     public $fillable = [ 'idCliente' , 'idCar', 'pago' , 'cantidad' , 'fecha'];
 
-    /*public function getSearchResult(): SearchResult
-    {
-       return new SearchResult($this, $this->title, route('front.post.show', $this->slug));
-    }*/
-
     
 }

@@ -9,17 +9,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Carta;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Pagination\Paginator;
 
 class PaginationController extends Controller
 {
 
     /**
-     * FUNCIÓN QUE MUESTRA TODA LA CARTA DEL RESTAURANTE
+     * View all products
+     * 
+     * @param 
+     * @return view carta
      */
     public function index()
     {
@@ -29,6 +30,12 @@ class PaginationController extends Controller
     }
 
 
+    /**
+     * Search product's by name
+     * 
+     * @param req product's name
+     * @return view product
+     */
     function fetch_data(Request $request) {
         if ($request->ajax()) {
             $sort_by = $request->get('sortby');

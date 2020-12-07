@@ -70,15 +70,11 @@ Route::get('pagination/fetch_data', [App\Http\Controllers\PaginationController::
  */
 Route::get('/ver',  [App\Http\Controllers\CartaController::class, 'ver'])->name('ver');
 Route::post('/producto/add' ,  [App\Http\Controllers\PedidoController::class, 'add'])->name('producto.add')->middleware('auth');
-Route::get('/carrito/{id}' , [App\Http\Controllers\PedidoController::class, 'carrito'])->name('carrito')->middleware('auth');
 Route::get('/pedido/borrar/{id}' ,  [App\Http\Controllers\PedidoController::class, 'borrar'])->name('pedido.borrar')->middleware('auth');
 Route::get('/pedido/pagar/{id}' ,  [App\Http\Controllers\PedidoController::class, 'pagar'])->name('pedido.pagar')->middleware('auth');
-Route::get('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('search');
-Route::get('/historial/{id}' , [App\Http\Controllers\PedidoController::class, 'historial'])->name('historial')->middleware('auth');
 Route::get('producto/pagado', [App\Http\Controllers\PedidoController::class, 'pagado'])->name('pagado')->middleware('auth');
 Route::get('reparto', [App\Http\Controllers\PedidoController::class, 'ver_reparto'])->name('ver_reparto')->middleware('auth');
 Route::post('producto/repartido' ,  [App\Http\Controllers\PedidoController::class, 'repartido'])->name('repartido')->middleware('auth');
-//Route::get('show_pedido/{fecha}' ,  [App\Http\Controllers\PedidoController::class, 'show_pedido'])->name('show_pedido')->middleware('auth');
 Route::post('show_pedido/' ,  [App\Http\Controllers\PedidoController::class, 'show_pedido'])->name('show_pedido')->middleware('auth');
 
 /**

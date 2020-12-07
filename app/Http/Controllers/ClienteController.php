@@ -12,7 +12,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Response;
@@ -20,15 +19,23 @@ use Illuminate\Http\Response;
 class ClienteController extends Controller
 {
 
-
     /**
-     * NO PODER ACCEDER AL USUARIO SIN
-     * ESTAR LOGUEADO
+     * User's must be logged to access
+     * 
+     * @param 
+     * @return view 
      */
     public function __construct()
     {
         $this->middleware('auth');
     }
+
+    /**
+     * View the user's profile
+     * 
+     * @param id
+     * @return view user's profile
+     */
 
     public function profile ($id) {
         $user = User::find($id);
@@ -36,12 +43,17 @@ class ClienteController extends Controller
         return view('users.profile' , [
             'user' => $user
         ]);
-        //return redirect()->with('error', '¡No tienes permisos para acceder a este usuario!');
     }
+
+    /**
+     * Update the user's profile dates
+     * 
+     * @param req all user's profile dates
+     * @return view user's profile
+     */
 
     public function update(Request $request) {
         //conseguir el usuario que esta identificado
-        
         $userDetails = Auth::user();
         $user = User::find($userDetails ->id);
         $id = $user->id;
@@ -55,7 +67,7 @@ class ClienteController extends Controller
             'email' => ['required', 'string', 'email', 'max:100', 'unique:cliente,email,'.$id],
             'ciudad' => ['required' , 'string' , 'max:50'],
         ]);
-            //dd($validate);
+
         //recogida de los datos del formulario
         $nombre = $request->input('nombre');
         $apellido1 = $request->input('apellido1');
@@ -82,11 +94,15 @@ class ClienteController extends Controller
 
         //ejecutar consulta y guardar los cambios
         $user->update();
-
         return redirect()->route('profile' , ['id' => $id]);
     }
 
-
+    /**
+     * Delete profile taking the user's id in the session
+     * 
+     * @param 
+     * @return view home
+     */
     public function delete() {
         $userDetails = Auth::user();
         $user = User::find($userDetails ->id);
@@ -97,11 +113,23 @@ class ClienteController extends Controller
         return redirect()->route('home');
     }
 
+    /**
+     * View the contact's page
+     * 
+     * @param 
+     * @return view nosotros
+     */
     
     public function contacto() {
         return view('users.nosotros');
     }
 
+    /**
+     * Get the user image
+     * 
+     * @param filename image's name
+     * @return response file
+     */
     public function getImagen($filename) {
         $file = Storage::disk('imagenes')->get($filename);
         return new Response($file , 200);
