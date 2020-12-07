@@ -108,6 +108,13 @@
 
 
                     </li>
+                    @if (Auth::user()->perfil === 'admin')
+                    <li>
+                        <a class="dropdown-item" href="{{route('chart')}}">
+                            {{ __('Chart') }}
+                        </a>
+                    </li>
+                    @endif
                 </div>
 
 

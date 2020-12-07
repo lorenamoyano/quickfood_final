@@ -34,22 +34,31 @@
                             <h6>{{number_format ($cartas->precio,2) }}€</h6>
                         </div>
                         <div class="modal-footer">
-                            <a type="button" data-dismiss="modal"><i class="fas fa-arrow-left"></i></a>
+                            
                             @if(Auth::user() && Auth::user()->perfil=="admin")
+                            <a type="button" data-dismiss="modal"><i class="fas fa-arrow-left"></i></a>
                             <a href="{{route('product.update' , ['id' =>$cartas->id])}}"><i class="fas fa-edit"></i></a>
                             <a href=""></a>
                             <!-- Button trigger modal -->
                             <a href="{{route('product.delete' , ['id' =>$cartas->id])}}" style="color:red"><i class="fas fa-trash-alt"></i></a>
                             @endif
+
+
+                            @if(Auth::user() && Auth::user()->perfil=="user")
+                            <form method="POST" action="{{ route('producto.add', ['id' => $cartas->id]) }}">
+                            @csrf
+                                <label for="cantidad">¿Cuántas unidades desea?</label>
+                                <input class="cantidad col-sm-12 mb-2" type="number" class="form-control" name="cantidad" value="1" min="1">
+                                <input type="hidden" name="fecha" value="{{ $diff = Carbon\Carbon::parse(Carbon\Carbon::now()->toDateString())}}" />
+                                <button type="submit" class="btn btn-success col-sm-12">Añadir cesta</button>
+                            </form>
+                            <a type="button" data-dismiss="modal"><i class="fas fa-arrow-left"></i></a>
+                            @endif
+                            @if(!Auth::user())
+                            <a type="button" data-dismiss="modal"><i class="fas fa-arrow-left"></i></a>
+                            <a href="{{route('login')}}" style="color:green"><i class="fas fa-shopping-basket"></i></a>
+                            @endif
                         </div>
-
-                        @if(Auth::user() && Auth::user()->perfil=="user")
-                        <a href="{{route('cesta' , ['id' =>$cartas->id])}}" style="color:green"><i class="fas fa-shopping-basket"></i></a>
-                        @endif
-                        @if(!Auth::user())
-                        <a href="{{route('login')}}" style="color:green"><i class="fas fa-shopping-basket"></i></a>
-                        @endif
-
                     </div>
                 </div>
             </div>
@@ -59,6 +68,8 @@
     @endforeach
 
 </div>
-<div colspan="3" class="col-sm-12 mx-auto" style="margin-top: 2em;">
-    {{ $data->links() }}
+<div class="links">
+    <div colspan="3" class="col-sm-12" style="margin-top: 2em;">
+        {{ $data->links() }}
+    </div>
 </div>

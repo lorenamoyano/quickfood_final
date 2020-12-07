@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div id="container" style="width: 75%;">
+<div id="container" class="mx-auto" style="width: 75%;">
     <canvas id="pie-chart"></canvas>
 </div>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>

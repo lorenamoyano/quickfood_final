@@ -36,7 +36,8 @@
                             @foreach($show_pedido as $historial_user)
                             <tr class="service">
                                 <td class="tableitem">
-                                    <p class="itemtext" id="center">{{$historial_user->fecha}}</p>
+                                    <p class="itemtext" id="center">{{date('d-m-Y', strtotime($historial_user->fecha))}}</p>
+                                    
                                 </td>
                                 <td class="tableitem">
                                     <p class="itemtext">{{$historial_user->nombre}}</p>
@@ -52,7 +53,7 @@
                             @endforeach
                             <tr class="service">
                                 <td class="tableitem">
-                                    <p class="itemtext" id="center">{{$historial_user->fecha}}</p>
+                                    <p class="itemtext" id="center">{{date('d-m-Y', strtotime($historial_user->fecha))}}</p>
                                 </td>
                                 <td class="tableitem">
                                     <p class="itemtext">Reparto</p>

@@ -2,22 +2,23 @@
 @section('content')
 
 @if(@guest || Auth::user()->perfil != "repartidor")
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <!--Buscador -->
+        <div class="col-sm-11 mx-auto">
+            <div class="form-group">
+                <input type="text" name="search" id="search" class="form-control text-center" placeholder="Buscar producto" />
+            </div>
+        </div>
+        <div class="col-sm-11 content">
 
-<div class="row justify-content-center">
-<!--Buscador -->
-<div class="col-md-10 mx-auto">
-    <div class="form-group">
-        <input type="text" name="search" id="search" class="form-control text-center" placeholder="Buscar producto" />
-    </div>
-</div>
-    <div class="col-sm-11 content">
-        
-        
-        @include('carta.pagination_data')
 
-        <input type="hidden" name="hidden_page" id="hidden_page" value="1" />
-        <input type="hidden" name="hidden_column_name" id="hidden_column_name" value="id" />
-        <input type="hidden" name="hidden_sort_type" id="hidden_sort_type" value="asc" />
+            @include('carta.pagination_data')
+
+            <input type="hidden" name="hidden_page" id="hidden_page" value="1" />
+            <input type="hidden" name="hidden_column_name" id="hidden_column_name" value="id" />
+            <input type="hidden" name="hidden_sort_type" id="hidden_sort_type" value="asc" />
+        </div>
     </div>
 </div>
 
@@ -32,7 +33,7 @@
 
         function fetch_data(page, sort_type, sort_by, query) {
             $.ajax({
-                url: "pagination/fetch_data?page="+page+"&sortby="+sort_by+"&sorttype="+sort_type+"&query="+query,
+                url: "pagination/fetch_data?page=" + page + "&sortby=" + sort_by + "&sorttype=" + sort_type + "&query=" + query,
                 success: function(data) {
                     //$('.content').html('');
                     $('.content').html(data);
@@ -87,6 +88,7 @@
 
     });
 </script>
+
 @else
 <div class="alert alert-danger col-sm-5 mx-auto">
     {{ ('No tienes permisos para ver esta página') }}

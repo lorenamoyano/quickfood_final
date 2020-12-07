@@ -3,57 +3,65 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8 formulario">
+        <div class="profile mx-auto">
             @if(Auth::user() && Auth::user()->id == $user->id || Auth::user()->perfil == "admin")
             @if (session('status'))
             <div class="alert alert-success" role="alert">
                 {{ session('status') }}
             </div>
             @endif
-            Perfil de {{Auth::user()->nombre}}
+            <h3 class="profile_name">Perfil de {{Auth::user()->nombre}}</h3>
             <hr>
-            @if(Auth::user()->avatar)
-            <img src="{{ url('/user/avatar/'.Auth::user()->avatar) }}" class="avatar">
-            @else
-            <img src="{{asset('img/dibujo.svg')}}" class="avatar">
-            @endif
-            <br>
-            {{$user->nombre}}
-            {{$user->apellido1}}
-            {{$user->apellido2}}
-            <br>
-            {{$user->telefono}}<br>
-            {{$user->email}}
-            <br>
-            {{$user->ciudad}}
-            <br>
-            <strong>Tiempo con nosotros: </strong>
-            {{ $diff = Carbon\Carbon::parse($user['created_at'])->diffForHumans(Carbon\Carbon::now()) }}
-            <br>
-            <a href="{{ route('user.delete' , ['id' => $user->id]) }}"><i class="fa fa-trash" style="color:red" style="text-align: right;"></i></a>
-            <a type="button" data-toggle="modal" data-target="#myModal-{{ $user->id }}">
-                <i class="fas fa-edit" style="color:blue" style="text-align: right;"></i>
-            </a>
-            <div class="row">
-                <form action="{{route('show_pedido')}}" method="post">
-                    @csrf
-                    <div class="input-group date" data-provide="datepicker">
-                        <input type="text" class="form-control datepicker" name="fecha">
-                    </div>
-                    <button type="submit" class="btn btn-default btn-primary">Enviar</button>
-                </form>
-            </div>
-            <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-            <link rel="stylesheet" href="/resources/demos/style.css">
-            <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-            <script>
-                $('.datepicker').datepicker({
-                    dateFormat: 'yy-mm-dd',
-                    startDate: '-3d'
-                });
-            </script>
-            <!-- Modal -->
+            <div class="parent">
+                <div class="div1">
+                    @if(Auth::user()->avatar)
+                    <img src="{{ url('/user/avatar/'.Auth::user()->avatar) }}">
+                    @else
+                    <img src="{{asset('img/dibujo.svg')}}">
+                    @endif
+                </div>
+                <div class="div2">
+                    <table>
+                        <tr>
+                            <td><strong>Nombre completo:</strong> {{$user->nombre}} {{$user->apellido1}} {{$user->apellido2}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Teléfono:</strong> {{$user->telefono}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Email:</strong> {{$user->email}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>API:</strong> Sitio API</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Localidad:</strong> {{$user->ciudad}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tiempo en QuickFood:</strong> {{ $diff = Carbon\Carbon::parse($user['created_at'])->diffForHumans(Carbon\Carbon::now()) }}</td>
+                        </tr>
+                    </table>
+                </div>
+                @if(Auth::user()->perfil === "user")
+                <div class="div4">
+                    <form action="{{route('show_pedido')}}" method="post">
+                        @csrf
+                        <div class="input-group date" data-provide="datepicker">
+                            <input type="date" class="form-control datepicker" name="fecha">
+                        </div>
+                        <button type="submit" class="btn btn-default btn-primary mt-2">Enviar</button>
+                    </form>
+                </div>
+                @endif
+                <div class="div3">
+                    <a href="{{ route('user.delete' , ['id' => $user->id]) }}"><i class="fa fa-trash" style="color:red" style="text-align: right;"></i></a>
+                    <a type="button" data-toggle="modal" data-target="#myModal-{{ $user->id }}">
+                        <i class="fas fa-edit" style="color:blue" style="text-align: right;"></i>
+                    </a>
+                </div>
+                <div class="div8">
+                    
+                    <!-- Modal -->
             <div data-backdrop="static" data-keyboard="false" class="modal fade" id="myModal-{{ $user->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -93,31 +101,9 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="modal-footer">
-                            <a type="button" data-dismiss="modal"><i class="fas fa-arrow-left"></i></a>
-                            @if(Auth::user() && Auth::user()->perfil=="admin")
-                            <a href=""><i class="fas fa-edit"></i></a>
-                            <a href=""></a>
-                            <!-- Button trigger modal -->
-                            <a data-toggle="modal" href="#myModal2" style="color:red"><i class="fas fa-trash-alt"></i></a>
-                        </div>
-                        @endif
-                        @if(Auth::user() && Auth::user()->perfil=="user")
-                        <a href="" style="color:green"><i class="fas fa-shopping-basket"></i></a>
-                        @endif
-                        @if(!Auth::user())
-                        <a href=""><i class="fas fa-shopping-basket"></i></a>
-                        @endif
-
-                    </div>
                 </div>
             </div>
-            @else
-            <div class="alert alert-danger">
-                {{ ('No tienes permisos para ver esta página') }}
-            </div>
             @endif
-
         </div>
     </div>
 </div>
