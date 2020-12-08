@@ -1,0 +1,88 @@
+@import "variables";
+
+
+.parent {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    
+    
+    .div1 { 
+        grid-column-start: 1;
+        grid-column-end: 6;
+        grid-row-start: 1;
+        grid-row-end: 5;
+        background: url('../../public/img/back.jpg');
+        height: 100vh;
+        width: 100%;
+        -webkit-background-size: cover;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+    }
+    .div2 { 
+        grid-column-start: 2;
+        grid-column-end: 4;
+        grid-row-start: 1;
+        grid-row-end: 3;
+
+        p {
+            padding: 0;
+            margin-top: 2%;
+            text-align: center;
+            color: $white;
+        }
+
+        h1 {
+            font-size: 50px;
+            font-weight: 700;
+            margin-top: 15%;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: $white;
+            text-align: center;
+        }
+    }
+    .div3 { 
+        grid-column-start: 3;
+        grid-column-end: 3;
+        grid-row-start: 3;
+        grid-row-end: 3;
+        a {
+            text-transform: uppercase;
+            text-decoration: none;
+            color: $white;
+            background: $light-black;
+            padding: 10px 30px;
+            margin-top: 10px;
+            text-align: center;
+        }
+    }
+}
+
+.main-text{
+    background-color: $white;
+    padding: 100px 0;
+
+    p , h1 {
+        width: 60%;
+        margin: 0 auto 25px;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    p {
+        text-align: justify;
+    }
+
+    .derecha {
+        text-align: right;
+    }
+} 

@@ -69,7 +69,7 @@
 
 </div>
 <div class="links">
-    <div colspan="3" class="col-sm-12" style="margin-top: 2em;">
+    <div colspan="3" class="col-sm-12">
         {{ $data->links() }}
     </div>
 </div>

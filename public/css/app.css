@@ -3,6 +3,7 @@
 @import url(../../resources/sass/ticket.css);
 @import url(../../resources/sass/carta.css);
 @import url(../../resources/sass/profile.css);
+@import url(../../resources/sass/banner.css);
 
 /*!
  * Bootstrap v4.5.2 (https://getbootstrap.com/)
@@ -3574,7 +3575,7 @@ input[type=button].btn-block {
   border-top: 1px solid #e9ecef;
 }
 
-.dropdown-item {
+.dropdown-item , .dropdown-toggle {
   display: block;
   width: 100%;
   padding: 0.25rem 1.5rem;
@@ -3588,21 +3589,25 @@ input[type=button].btn-block {
 }
 
 .dropdown-item:hover,
-.dropdown-item:focus {
+.dropdown-item:focus,
+.dropdown-toggle:hover,
+.dropdown-toggle:focus {
   color: #16181b;
   text-decoration: none;
   background-color: #f8f9fa;
 }
 
 .dropdown-item.active,
-.dropdown-item:active {
+.dropdown-item:active,
+.dropdown-toggle:active {
   color: #fff;
   text-decoration: none;
   background-color: #3490dc;
 }
 
 .dropdown-item.disabled,
-.dropdown-item:disabled {
+.dropdown-item:disabled,
+.dropdown-toggle:disabled {
   color: #6c757d;
   pointer-events: none;
   background-color: transparent;
@@ -10967,11 +10972,11 @@ list-style:none !important;
 
 
 
-.dropdown-item {
+.dropdown-item, .dropdown-toggle {
 display: inline-block !important;
 }
 
-.dropdown-item:hover {
+.dropdown-item:hover , .dropdown-toggle:hover {
 background-color: unset !important;
 color: unset !important;
 }
@@ -11239,7 +11244,6 @@ border: lightcoral !important;
   text-overflow: ellipsis;
   overflow: hidden;
 }
-
 
 
 .restaurant-grid {

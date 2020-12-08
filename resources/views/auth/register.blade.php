@@ -6,6 +6,7 @@
         <div class="col-lg-6">
             <form method="POST" action="{{ route('register') }}" class="formulario_register" onsubmit="return validar_registro()">
                 @csrf
+                <input type="hidden" name="api_token" value="">
                 <div class="form-group row">
                     <div class="col-md-12 input-icons">
                         <i class="fa fa-user icon"></i>

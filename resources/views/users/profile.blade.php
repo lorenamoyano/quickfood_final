@@ -32,7 +32,12 @@
                             <td><strong>Email:</strong> {{$user->email}}</td>
                         </tr>
                         <tr>
-                            <td><strong>API:</strong> Sitio API</td>
+                            <td><strong>API:</strong>
+                                @if(!$user->api_token) No hay clave
+                                @else
+                                {{$user->api_token}}
+                                @endif
+                            </td>
                         </tr>
                         <tr>
                             <td><strong>Localidad:</strong> {{$user->ciudad}}</td>

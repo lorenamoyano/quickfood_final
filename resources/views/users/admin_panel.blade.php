@@ -1,79 +1,42 @@
 @extends('layouts.app')
-
 @section('content')
-@if(Auth::user()&&Auth::user()->perfil === "admin")
-<div class="container" id="contenedor"></div>
-<br />
-<div class="container">
-    <h3 align="center">Panel de administración</h3><br />
-    <div class="row">
-        <div class="col-sm-9">
 
-        </div>
-        <div class="col-sm-3">
+@if(@guest || Auth::user()->perfil == "admin")
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <!--Buscador -->
+        <div class="col-sm-11 mx-auto">
             <div class="form-group">
-                <input type="text" name="search" id="search" class="form-control" />
+                <input type="text" name="search" id="search" class="form-control text-center" placeholder="Buscar usuario" />
             </div>
         </div>
-    </div>
-    <div class="table-responsive col-sm-12">
-        <table class="table_admin col-sm-12">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Apellidos</th>
-                    <th>DNI</th>
-                    <th>Teléfono</th>
-                    <th>Email</th>
-                    <th>Ciudad</th>
-                    <th>Perfil</th>
-                    <th>Unido hace...</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <form method="get" action="{{ route('perfil') }}">
-                    @csrf
-                    <!-- si no se pone da un error de que la página ha expirado -->
-                    <input id="id" type="hidden" name="id" value="" />
-                    <input id="perfil" type="hidden" name="perfil" value="" />
-                </form>
-                @include('users.pagination_data')
-            </tbody>
-        </table>
-        <div colspan="3" align="center" style="margin-top: 2em;">
-            {!! $data->links() !!}
+        <br>
+        <div class="col-sm-11 content">
+            @include('users.pagination_admin_data')
+            
+
+            <input type="hidden" name="hidden_page" id="hidden_page" value="1" />
+            <input type="hidden" name="hidden_column_name" id="hidden_column_name" value="id" />
+            <input type="hidden" name="hidden_sort_type" id="hidden_sort_type" value="asc" />
         </div>
-        <input type="hidden" name="hidden_page" id="hidden_page" value="1" />
-        <input type="hidden" name="hidden_column_name" id="hidden_column_name" value="id" />
-        <input type="hidden" name="hidden_sort_type" id="hidden_sort_type" value="asc" />
     </div>
 </div>
 
 
-<script>
+<script type="application/javascript">
     $(document).ready(function() {
-        $('select').change(function(e) {
 
-            var id = $(e.target).data('id');
-            var profile = '#' + id.toString() + " option:selected";
-            $('#perfil').val($(profile).val());
-            $('#id').val(id);
-
-            $('form').submit();
-        });
-    });
-</script>
-<script>
-    $(document).ready(function() {
+        function clear_icon() {
+            $('#id_icon').html('');
+            $('#post_title_icon').html('');
+        }
 
         function fetch_data(page, sort_type, sort_by, query) {
             $.ajax({
-                url: "pagination/fetch_data?page=" + page + "&sortby=" + sort_by +
-                    "&sorttype=" + sort_type + "&query=" + query,
+                url: "pagination/fetch_admin_data?page=" + page + "&sortby=" + sort_by + "&sorttype=" + sort_type + "&query=" + query,
                 success: function(data) {
-                    $('tbody').html('');
-                    $('tbody').html(data);
+                    //$('.content').html('');
+                    $('.content').html(data);
                 }
             })
         }
@@ -86,9 +49,30 @@
             fetch_data(page, sort_type, column_name, query);
         });
 
+        $(document).on('click', '.sorting', function() {
+            var column_name = $(this).data('column_name');
+            var order_type = $(this).data('sorting_type');
+            var reverse_order = '';
+            if (order_type == 'asc') {
+                $(this).data('sorting_type', 'desc');
+                reverse_order = 'desc';
+                clear_icon();
+                $('#' + column_name + '_icon').html('<span class="glyphicon glyphicon-triangle-bottom"></span>');
+            }
+            if (order_type == 'desc') {
+                $(this).data('sorting_type', 'asc');
+                reverse_order = 'asc';
+                clear_icon
+                $('#' + column_name + '_icon').html('<span class="glyphicon glyphicon-triangle-top"></span>');
+            }
+            $('#hidden_column_name').val(column_name);
+            $('#hidden_sort_type').val(reverse_order);
+            var page = $('#hidden_page').val();
+            var query = $('#search').val();
+            fetch_data(page, reverse_order, column_name, query);
+        });
 
-
-        $(document).on('click', '.admin_panel a', function(event) {
+        $(document).on('click', '.pagination a', function(event) {
             event.preventDefault();
             var page = $(this).attr('href').split('page=')[1];
             $('#hidden_page').val(page);

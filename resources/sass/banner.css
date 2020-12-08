@@ -1,0 +1,101 @@
+.parent {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[5];
+      grid-template-columns: repeat(5, 1fr);
+  -ms-grid-rows: (1fr)[4];
+      grid-template-rows: repeat(4, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.parent .div1 {
+  -ms-grid-column: 1;
+      grid-column-start: 1;
+  grid-column-end: 6;
+  -ms-grid-row: 1;
+      grid-row-start: 1;
+  grid-row-end: 5;
+  background: url("../../public/img/back.jpg");
+  height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: -ms-grid;
+  display: grid;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.parent .div2 {
+  -ms-grid-column: 2;
+      grid-column-start: 2;
+  grid-column-end: 4;
+  -ms-grid-row: 1;
+      grid-row-start: 1;
+  grid-row-end: 3;
+}
+
+.parent .div2 p {
+  padding: 0;
+  margin-top: 2%;
+  text-align: center;
+  color: #ffffff;
+}
+
+.parent .div2 h1 {
+  font-size: 50px;
+  font-weight: 700;
+  margin-top: 15%;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.parent .div3 {
+  -ms-grid-column: 3;
+      grid-column-start: 3;
+  grid-column-end: 3;
+  -ms-grid-row: 3;
+      grid-row-start: 3;
+  grid-row-end: 3;
+}
+
+.parent .div3 a {
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #ffffff;
+  background: #262626;
+  padding: 10px 30px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.main-text {
+  background-color: #ffffff;
+  padding: 100px 0;
+}
+
+.main-text p, .main-text h1 {
+  width: 60%;
+  margin: 0 auto 25px;
+}
+
+.main-text h1 {
+  text-align: center;
+}
+
+.main-text p {
+  text-align: justify;
+}
+
+.main-text .derecha {
+  text-align: right;
+}
+/*# sourceMappingURL=banner.css.map */

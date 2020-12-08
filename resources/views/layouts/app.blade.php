@@ -50,7 +50,11 @@
             <div class="container">
                 <input type="hidden" name="_token" value="{{ Session::token() }}">
                 <img src="{{asset('img/dibujo.svg')}}" class="redimension">
-                <a class="navbar-brand" href="{{ route('home') }}">Inicio</a>
+                @if(Auth::user())
+                <a class="nav-link disabled" href="#" role="button" aria-haspopup="true" aria-expanded="false" v-pre>
+                        Bienvenid@, {{ Auth::user()->nombre }}
+                    </a>
+                @endif
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -58,8 +62,19 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <li class="nav-item dropdown">
+                        <a class="dropdown-item" href="{{ route('home') }}">
+                            {{ __('Inicio') }}
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
                         <a class="dropdown-item" href="{{ route('ver') }}">
                             {{ __('Carta') }}
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item" href="{{route('contacto')}}">
+                            {{ __('Nosotros') }}
                         </a>
                     </li>
                     <!-- Left Side Of Navbar -->
@@ -73,26 +88,9 @@
                     </li>
                     @endif
                     @else
-                    <li class="nav-item dropdown">
-                        <a class="dropdown-item" href="{{ route('profile' , ['id' => Auth::user()->id]) }}">
-                            {{ __('Perfil') }}
-                        </a>
-                    </li>
-
-
-                    <li>
-                        <a class="dropdown-item" href="{{route('contacto')}}">
-                            {{ __('Nosotros') }}
-                        </a>
-                    </li>
                     
-
                     <li>
-                        @if (Auth::user()->perfil === 'admin')
-                        <a class="dropdown-item" href="{{ route('admin_panel1') }}">
-                            {{ __('Panel Administración') }}
-                        </a>
-                        @endif
+                        
 
                         @if (Auth::user()->perfil === 'user')
                         <a class="dropdown-item" href="{{ route('pedido.pagar' , ['id' => Auth::user()->id]) }}">
@@ -108,43 +106,48 @@
 
 
                     </li>
-                    @if (Auth::user()->perfil === 'admin')
-                    <li>
-                        <a class="dropdown-item" href="{{route('chart')}}">
-                            {{ __('Chart') }}
-                        </a>
-                    </li>
-                    @endif
-                </div>
+                
 
 
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
                     <!-- Authentication Links -->
-                    <a class="nav-link disabled" href="#" role="button" aria-haspopup="true" aria-expanded="false" v-pre>
-                        Bienvenido, {{ Auth::user()->nombre }}
-                    </a>
-                    <li>
-                        <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                    
+                    @if (Auth::user()->perfil === 'admin')
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ __('Administración') }}
                         </a>
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('admin_panel1') }}">{{ __('Panel administración') }}</a>
+                            <a class="dropdown-item" href="{{route('chart')}}">{{__('Gráfico')}}</a>
+                        </div>
                     </li>
+                    @endif
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ __('Perfil') }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('profile' , ['id' => Auth::user()->id]) }}">{{ __('Perfil') }}</a>
+                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">{{__('Cerrar sesión')}}</a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>    
+                    </div>
+                    </li>
+                    
                     @endguest
                 </ul>
             </div>
-
+            </div>
         </nav>
 
         <main class="py-4">
             @yield('content')
         </main>
     </div>
-
 </body>
 
 <script>

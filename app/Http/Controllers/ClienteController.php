@@ -25,10 +25,10 @@ class ClienteController extends Controller
      * @param 
      * @return view 
      */
-    public function __construct()
+    /*public function __construct()
     {
         $this->middleware('auth');
-    }
+    }*/
 
     /**
      * View the user's profile

@@ -15,19 +15,22 @@ class CreateClienteTable extends Migration
     {
         Schema::create('cliente', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre' , 250);
-            $table->string('apellido1' , 100);
-            $table->string('apellido2' , 100)->nullable();
-            $table->string('DNI' , 9)->unique();
-            $table->string('telefono' , 9)->unique();
-            $table->string('email' , 100)->unique();
-            $table->string('password' , 300);
-            $table->string('ciudad' , 50);
-            $table->string('avatar' , 255);
+            $table->string('nombre', 250);
+            $table->string('apellido1', 100);
+            $table->string('apellido2', 100)->nullable();
+            $table->string('DNI', 9)->unique();
+            $table->string('telefono', 9)->unique();
+            $table->string('email', 100)->unique();
+            $table->string('password', 300);
+            $table->string('api_token' , 32);
+            $table->string('ciudad', 50);
+            $table->string('avatar', 255);
             $table->timestamps();
-            $table->rememberToken() ;
+            $table->rememberToken();
         });
     }
+
+
 
     /**
      * Reverse the migrations.

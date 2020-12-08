@@ -19,43 +19,11 @@ class AdminController extends Controller
 
     public function admin_panel()
     {
-        $data = DB::table('cliente')->paginate(3);
+        $data = DB::table('cliente')->paginate(8);
         return view('users.admin_panel',  ['data' => $data]);
     }
 
-
-    /**
-     * Search users in the database
-     * 
-     * @param req user's name, user' surname, user's city, 
-     *            user's phone, user's dni, user's profile and user's email
-     * @return view search result
-     */
-
-    function fetch_data(Request $request)
-    {
-        if ($request->ajax()) {
-            $sort_by = $request->get('sortby');
-            $sort_type = $request->get('sorttype');
-            $query = $request->get('query');
-            $query = str_replace(" ", "%", $query);
-            $data = DB::table('cliente')
-                ->where('id', 'like', '%' . $query . '%')
-                ->orWhere('nombre', 'like', '%' . $query . '%')
-                ->orWhere('ciudad', 'like', '%' . $query . '%')
-                ->orWhere('apellido1', 'like', '%' . $query . '%')
-                ->orWhere('apellido2', 'like', '%' . $query . '%')
-                ->orWhere('telefono', 'like', '%' . $query . '%')
-                ->orWhere('DNI', 'like', '%' . $query . '%')
-                ->orWhere('email', 'like', '%' . $query . '%')
-                ->orWhere('perfil', 'like', '%' . $query . '%')
-                ->orderBy($sort_by, $sort_type)
-                ->paginate(3);
-            //dd($data);
-            return view('users.pagination_data', ['data' => $data])->render();
-        }
-    }
-
+    
     /**
      * Change the user's type
      * 
@@ -67,7 +35,7 @@ class AdminController extends Controller
     {
         $tabla = DB::table('cliente')->where('id', $id->input('id'))->update(['perfil' => $id->input('perfil')]);
         //dd($tabla);
-        $data = DB::table('cliente')->paginate(3);
+        $data = DB::table('cliente')->paginate(8);
         return view('users.admin_panel', ['data' => $data]);
     }
 
@@ -81,7 +49,7 @@ class AdminController extends Controller
     public function delete_user(Request $id)
     {
         DB::table('cliente')->where('id', $id->input('id'))->delete();
-        $data = DB::table('cliente')->paginate(3);
+        $data = DB::table('cliente')->paginate(8);
         return view('users.admin_panel', ['data' => $data]);
     }
 

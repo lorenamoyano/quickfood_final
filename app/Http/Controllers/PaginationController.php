@@ -36,16 +36,50 @@ class PaginationController extends Controller
      * @param req product's name
      * @return view product
      */
-    function fetch_data(Request $request) {
+    function fetch_data(Request $request)
+    {
         if ($request->ajax()) {
             $sort_by = $request->get('sortby');
-      $sort_type = $request->get('sorttype');
+            $sort_type = $request->get('sorttype');
             $query = $request->get('query');
             $query = str_replace(" ", "%", $query);
             $data = DB::table('carta')
                 ->where('nombre', 'like', '%' . $query . '%')
                 ->paginate(8);
             return view('carta.pagination_data', compact('data'))->render();
+        }
+    }
+
+
+    /**
+     * View all user's in admin panel
+     * 
+     * @param 
+     * @return view users
+     */
+    public function index_admin()
+    {
+        $data = DB::table('cliente')->orderBy('id')->paginate(8);
+        return view('users.admin_panel', compact('data'));
+    }
+
+    /**
+     * Search users
+     * 
+     * @param req 
+     * @return view user or users
+     */
+    public function fetch_admin_data(Request $request)
+    {
+        if ($request->ajax()) {
+            $sort_by = $request->get('sortby');
+            $sort_type = $request->get('sorttype');
+            $query = $request->get('query');
+            $query = str_replace(" ", "%", $query);
+            $data = DB::table('cliente')
+                ->where('nombre', 'like', '%' . $query . '%')
+                ->paginate(8);
+            return view('users.pagination_admin_data', compact('data'))->render();
         }
     }
 }

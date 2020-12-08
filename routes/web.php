@@ -47,58 +47,63 @@ Auth::routes();
 /**
  * ROUTES HOME
  */
-Route::get('/',  [App\Http\Controllers\HomeController::class, 'index']);
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/',  'HomeController@index');
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('logout', 'LoginController@logout')->name('logout') ;
 
 /**
  * USER'S ROUTES
  */
-Route::get('/profile/{id}' ,  [App\Http\Controllers\ClienteController::class, 'profile'])->name('profile')->middleware('auth');
-Route::get('logout', [App\Http\Controllers\Auth\LoginController::class , 'logout'])->name('logout') ;
-Route::post('/usuario/update' , [App\Http\Controllers\ClienteController::class, 'update'])->name('user.update')->middleware('auth');
-Route::get('/usuario/delete' , [App\Http\Controllers\ClienteController::class, 'delete'])->name('user.delete')->middleware('auth');
-Route::get('/profile/{id}' ,  [App\Http\Controllers\ClienteController::class, 'profile'])->name('profile')->middleware('auth');
-Route::get('/contacto', [App\Http\Controllers\ClienteController::class, 'contacto'])->name('contacto')->middleware('auth');
-Route::get('/user/avatar/{filename}', [App\Http\Controllers\ClienteController::class, 'getImagen'])->name('user.avatar')->middleware('auth');
-Route::get('/admin', [App\Http\Controllers\AdminController::class, 'admin_panel'])->name('admin_panel1')->middleware('auth');
-Route::get('pagination/fetch_data', [App\Http\Controllers\AdminController::class, 'fetch_data'])->name('fetch_data')->middleware('auth');
-Route::get('pagination',  [App\Http\Controllers\PaginationController::class, 'index'])->name('pagination');
-Route::get('pagination/fetch_data', [App\Http\Controllers\PaginationController::class, 'fetch_data'])->name('fetch_data');
+Route::get('/profile/{id}' ,  'ClienteController@profile')->name('profile')->middleware('auth');
+Route::post('/usuario/update' , 'ClienteController@update')->name('user.update')->middleware('auth');
+Route::get('/usuario/delete' , 'ClienteController@delete')->name('user.delete')->middleware('auth');
+Route::get('/profile/{id}' ,  'ClienteController@profile')->name('profile')->middleware('auth');
+Route::get('/contacto', 'ClienteController@contacto')->name('contacto');
+Route::get('/user/avatar/{filename}', 'ClienteController@getImagen')->name('user.avatar')->middleware('auth');
+Route::get('pagination',  'PaginationController@index')->name('pagination');
+Route::get('pagination/fetch_data', 'PaginationController@fetch_data')->name('fetch_data');
 
 /**
  * CARD'S MENU
  */
-Route::get('/ver',  [App\Http\Controllers\CartaController::class, 'ver'])->name('ver');
-Route::post('/producto/add' ,  [App\Http\Controllers\PedidoController::class, 'add'])->name('producto.add')->middleware('auth');
-Route::get('/pedido/borrar/{id}' ,  [App\Http\Controllers\PedidoController::class, 'borrar'])->name('pedido.borrar')->middleware('auth');
-Route::get('/pedido/pagar/{id}' ,  [App\Http\Controllers\PedidoController::class, 'pagar'])->name('pedido.pagar')->middleware('auth');
-Route::get('producto/pagado', [App\Http\Controllers\PedidoController::class, 'pagado'])->name('pagado')->middleware('auth');
-Route::get('reparto', [App\Http\Controllers\PedidoController::class, 'ver_reparto'])->name('ver_reparto')->middleware('auth');
-Route::post('producto/repartido' ,  [App\Http\Controllers\PedidoController::class, 'repartido'])->name('repartido')->middleware('auth');
-Route::post('show_pedido/' ,  [App\Http\Controllers\PedidoController::class, 'show_pedido'])->name('show_pedido')->middleware('auth');
+Route::get('/ver',  'CartaController@ver')->name('ver');
+
+/**
+ * ORDER'S ROUTES
+ */
+Route::post('/producto/add' , 'PedidoController@add')->name('producto.add')->middleware('auth');
+Route::get('/pedido/borrar/{id}' , 'PedidoController@borrar')->name('pedido.borrar')->middleware('auth');
+Route::get('/pedido/pagar/{id}' , 'PedidoController@pagar')->name('pedido.pagar')->middleware('auth');
+Route::get('producto/pagado', 'PedidoController@pagado')->name('pagado')->middleware('auth');
+Route::get('reparto', 'PedidoController@ver_reparto')->name('ver_reparto')->middleware('auth');
+Route::post('producto/repartido' , 'PedidoController@repartido')->name('repartido')->middleware('auth');
+Route::post('show_pedido/' , 'PedidoController@show_pedido')->name('show_pedido')->middleware('auth');
 
 /**
  * USER ADMIN'S ROUTES
  */
-Route::get('/usuario/admin', [App\Http\Controllers\AdminController::class, 'admin_panel'])->name('admin_panel')->middleware('auth');
-Route::get('/perfil' ,  [App\Http\Controllers\AdminController::class, 'perfil'])->name('perfil')->middleware('auth');
-Route::get('/borrar' ,  [App\Http\Controllers\AdminController::class, 'delete_user'])->name('delete')->middleware('auth');
-Route::get('/anadir' ,  [App\Http\Controllers\AdminController::class, 'anadir'])->name('anadir')->middleware('auth');
-Route::post('/add' ,  [App\Http\Controllers\AdminController::class, 'add_carta'])->name('add')->middleware('auth');
-Route::get('/producto/borrar/{id}' ,  [App\Http\Controllers\AdminController::class, 'delete_product'])->name('product.delete')->middleware('auth');
-Route::post('/product/update' , [App\Http\Controllers\AdminController::class, 'edit_product'])->name('producto.update')->middleware('auth');
-Route::get('/edit/{id}' , [App\Http\Controllers\AdminController::class, 'view_edit'])->name('product.update')->middleware('auth');
-Route::get('/chart' , [App\Http\Controllers\AdminController::class, 'chartJS'])->name('chart')->middleware('auth');
+Route::get('/usuario/admin', 'AdminController@admin_panel')->name('admin_panel')->middleware('auth');
+Route::get('/perfil' ,  'AdminController@perfil')->name('perfil')->middleware('auth');
+Route::get('/borrar' ,  'AdminController@delete_user')->name('delete')->middleware('auth');
+Route::get('/anadir' ,  'AdminController@anadir')->name('anadir')->middleware('auth');
+Route::post('/add' ,  'AdminController@add_carta')->name('add')->middleware('auth');
+Route::get('/producto/borrar/{id}' ,  'AdminController@delete_product')->name('product.delete')->middleware('auth');
+Route::post('/product/update' , 'AdminController@edit_product')->name('producto.update')->middleware('auth');
+Route::get('/edit/{id}' ,'AdminController@view_edit')->name('product.update')->middleware('auth');
+Route::get('/chart' , 'AdminController@chartJS')->name('chart')->middleware('auth');
+Route::get('/admin', 'AdminController@admin_panel')->name('admin_panel1')->middleware('auth');
+Route::get('/admin_panel', 'PaginationController@index_admin')->name('administrador')->middleware('auth');
+Route::get('pagination/fetch_admin_data', 'PaginationController@fetch_admin_data')->name('fetch_admin_data')->middleware('auth');
 
 /**
  * API'S ROUTES
  */
 
-Route::middleware('auth:api')->get('/user', function(Request $request) {
+Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('productos', [App\Http\Controllers\ApiController::class, 'product'])->middleware('auth');
-Route::get('producto/{id}', [App\Http\Controllers\ApiController::class, 'producto'])->middleware('auth');
-Route::get('clientes', [App\Http\Controllers\ApiController::class, 'usuarios'])->middleware('auth');
-Route::get('cliente/{id}', [App\Http\Controllers\ApiController::class, 'usuario'])->middleware('auth');
+Route::get('productos/{api}', 'APIController@productos')->middleware('auth');
+Route::get('producto/{id}/{api}', 'APIController@producto')->middleware('auth');
+Route::get('clientes/{api}', 'APIController@usuarios')->middleware('auth');
+Route::get('cliente/{id}/{api}', 'APIController@usuario')->middleware('auth');
