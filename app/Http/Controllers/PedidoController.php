@@ -102,7 +102,14 @@ class PedidoController extends Controller
                                         ->where('pago' , '=' , '1')
                                         ->where('pedido.fecha' , '=' , $fecha)
                                         ->get();
-        return view ('users.show_pedido' , ['show_pedido' => $show_pedido]);
+
+        
+        $precio_reparto = DB::table('compra')->where('idClien' , '=' , $id)
+                                            ->where('repartido' , '=' , '1')
+                                            ->whereDate('created_at' , '=' , $fecha)
+                                            ->count();
+
+        return view ('users.show_pedido' , ['show_pedido' => $show_pedido , 'fecha' => $fecha , 'precio_reparto' => $precio_reparto]);
     }
 
 

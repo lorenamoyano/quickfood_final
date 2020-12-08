@@ -4,6 +4,7 @@
 @import url(../../resources/sass/carta.css);
 @import url(../../resources/sass/profile.css);
 @import url(../../resources/sass/banner.css);
+@import url(../../resources/sass/table_admin.css);
 
 /*!
  * Bootstrap v4.5.2 (https://getbootstrap.com/)
@@ -10913,7 +10914,7 @@ th , tbody {
 }
 
 #main {
-background-image: url('../../public/img/mosaic.jpg');
+background-image: url('../../public/img/wood.jpg');
 height: 100%;
 /*width: 100vw;*/
 max-width: 100%;
@@ -11122,22 +11123,6 @@ margin-bottom: 15px;
 
 #avatar {
 margin-bottom: 15px;
-}
-
-.table_admin {
-border-radius: 8px;
-box-shadow: 2px 2px 2px 1px rgba(26, 25, 25, 0.596);
-background-color: rgba(255, 255, 255, 0.5);
-}
-
-#submit {
-background-color: lightcoral !important;
-border: lightcoral !important;
-}
-
-#submit:hover {
-background-color: lightsalmon !important;
-border: lightcoral !important;
 }
 
 /* ******** */

@@ -19,7 +19,7 @@
 }
 
 .parent .div1 img {
-  width: 100%;
+  width: 300px;
   margin-left: 10px;
 }
 
@@ -52,5 +52,71 @@
   -ms-grid-row: 3;
       grid-row-start: 3;
   grid-row-end: 3;
+}
+
+.parent .div5 {
+  -ms-grid-column: 2;
+      grid-column-start: 2;
+  grid-column-end: 4;
+  -ms-grid-row: 3;
+      grid-row-start: 3;
+  grid-row-end: 4;
+}
+
+.parent .div5 a {
+  margin-left: 20px;
+}
+
+@media only screen and (max-width: 767px) {
+  .parent .div1 {
+    -ms-grid-column: 1;
+        grid-column-start: 1;
+    grid-column-end: 3;
+    -ms-grid-row: 1;
+        grid-row-start: 1;
+    grid-row-end: 4;
+  }
+  .parent .div2 {
+    -ms-grid-column: 1;
+        grid-column-start: 1;
+    grid-column-end: 4;
+    -ms-grid-row: 4;
+        grid-row-start: 4;
+    grid-row-end: 3;
+    margin-top: 1%;
+    margin-left: 1%;
+  }
+  .parent .div3 {
+    -ms-grid-column: 2;
+        grid-column-start: 2;
+    grid-column-end: 4;
+    -ms-grid-row: 4;
+        grid-row-start: 4;
+    grid-row-end: 4;
+  }
+  .parent .div3 a {
+    margin-left: 20px;
+  }
+  .parent .div4 {
+    -ms-grid-column: 1;
+        grid-column-start: 1;
+    grid-column-end: 2;
+    -ms-grid-row: 4;
+        grid-row-start: 4;
+    grid-row-end: 4;
+    margin-top: 1%;
+    margin-left: 1%;
+  }
+  .parent .div5 {
+    -ms-grid-column: 1;
+        grid-column-start: 1;
+    grid-column-end: 4;
+    -ms-grid-row: 4;
+        grid-row-start: 4;
+    grid-row-end: 4;
+  }
+  .parent .div5 a {
+    margin-left: 20px;
+  }
 }
 /*# sourceMappingURL=profile.css.map */

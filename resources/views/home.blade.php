@@ -2,13 +2,13 @@
 
 @section('content')
 
-<div class="parent">
-    <div class="div1"></div>
-    <div class="div2">
+<div class="parent3">
+    <div class="div10"></div>
+    <div class="div20">
         <h1>QuickFood</h1><br>
         <p>Siéntete como en casa, come como en casa</p>
     </div>
-    <div class="div3"><a href="{{route('contacto')}}">Visítanos</a></div>
+    <div class="div30"><a href="{{route('contacto')}}">Visítanos</a></div>
 </div>
 
 <div class="main-text">

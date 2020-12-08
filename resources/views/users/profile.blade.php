@@ -10,12 +10,12 @@
                 {{ session('status') }}
             </div>
             @endif
-            <h3 class="profile_name">Perfil de {{Auth::user()->nombre}}</h3>
+            <h3 class="profile_name">Perfil de {{$user->nombre}}</h3>
             <hr>
             <div class="parent">
                 <div class="div1">
-                    @if(Auth::user()->avatar)
-                    <img src="{{ url('/user/avatar/'.Auth::user()->avatar) }}">
+                    @if($user->avatar)
+                    <img src="{{ url('/user/avatar/'.$user->avatar) }}">
                     @else
                     <img src="{{asset('img/dibujo.svg')}}">
                     @endif
@@ -54,17 +54,23 @@
                         <div class="input-group date" data-provide="datepicker">
                             <input type="date" class="form-control datepicker" name="fecha">
                         </div>
-                        <button type="submit" class="btn btn-default btn-primary mt-2">Enviar</button>
+                        <button type="submit" class="btn btn-default btn-primary mt-2">Buscar</button>
                     </form>
                 </div>
-                @endif
                 <div class="div3">
                     <a href="{{ route('user.delete' , ['id' => $user->id]) }}"><i class="fa fa-trash" style="color:red" style="text-align: right;"></i></a>
                     <a type="button" data-toggle="modal" data-target="#myModal-{{ $user->id }}">
                         <i class="fas fa-edit" style="color:blue" style="text-align: right;"></i>
                     </a>
                 </div>
-                <div class="div8">
+                @else
+                <div class="div5">
+                    <a href="{{ route('user.delete' , ['id' => $user->id]) }}"><i class="fa fa-trash" style="color:red" style="text-align: right;"></i></a>
+                    <a type="button" data-toggle="modal" data-target="#myModal-{{ $user->id }}">
+                        <i class="fas fa-edit" style="color:blue" style="text-align: right;"></i>
+                    </a>
+                </div>
+                @endif
                     
                     <!-- Modal -->
             <div data-backdrop="static" data-keyboard="false" class="modal fade" id="myModal-{{ $user->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

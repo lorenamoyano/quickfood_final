@@ -3,11 +3,10 @@
 @section('content')
 
 <div class="container" id="contenedor">
-
     <div class="row justify-content-center">
-        <div>
-            <div>
-                <div class="container">
+        <div class="col-md-10">
+            <div class="container">
+                <div class="row">
                     <div id="invoice-POS">
 
                         <table>
@@ -92,13 +91,17 @@
                             </table>
                     </div>
                     <!--End Table-->
+                    
                 </div>
-            </div>
-            @if($pedido->count()>0)
+                <div class="col-3 mx-auto">
+                    @if($pedido->count()>0)
             <a type="button" class="btn btn-primary mx-auto mt-2" data-toggle="modal" data-target="#exampleModal">
-                Procesar pago
+                Pagar
             </a>
             @endif
+                    </div>
+            </div>
+            
             <div data-backdrop="static" data-keyboard="false" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -115,12 +118,12 @@
                                     <div class="col-md-6 mb-3">
                                         <label>Nombre</label>
                                         <input type="text" id="nombre" class="form-control" value="{{(Auth::user()->nombre)}}" required onchange="quitarError('nombreHelp')">
-                                        <small style="visibility: hidden;" id="nombreHelp" class="form-text text-danger">Campo alfanumérico y obligatorio</small>
+                                        <small style="visibility: hidden;" id="nombreHelp" class="form-text text-danger">Campo obligatorio</small>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label>Teléfono</label>
                                         <input type="text" id="telefono" class="form-control" value="{{(Auth::user()->telefono)}}" required onchange="quitarError('telefonoHelp')">
-                                        <small style="visibility: hidden;" id="telefonoHelp" class="form-text text-danger">Campo alfanumérico y obligatorio</small>
+                                        <small style="visibility: hidden;" id="telefonoHelp" class="form-text text-danger">Campo numérico yobligatorio</small>
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -135,7 +138,7 @@
                                     <div class="col-md-12 mb-3">
                                         <label>Número de la tarjeta</label>
                                         <input type="text" name='text1' id="num_card" class="form-control" placeholder="Número tarjeta" required onchange="quitarError('num_cardHelp')">
-                                        <small style="visibility: hidden;" id="num_cardHelp" class="form-text text-danger">Campo alfanumérico y obligatorio</small>
+                                        <small style="visibility: hidden;" id="num_cardHelp" class="form-text text-danger">Campo obligatorio. Sólo acepta VISA</small>
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <h5>Fecha de caducidad</h5>
@@ -145,12 +148,12 @@
                                     <div class="col-md-6 mb-3">
                                         <label>Mes</label>
                                         <input type="text" id="mes" class="form-control" placeholder="Mes" required onchange="quitarError('mesHelp')">
-                                        <small style="visibility: hidden;" id="mesHelp" class="form-text text-danger">Campo alfanumérico y obligatorio</small>
+                                        <small style="visibility: hidden;" id="mesHelp" class="form-text text-danger">Campo numérico y obligatorio</small>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label>Año</label>
                                         <input type="text" id="year" class="form-control" placeholder="Año" required onchange="quitarError('yearHelp')">
-                                        <small style="visibility: hidden;" id="yearHelp" class="form-text text-danger">Campo alfanumérico y obligatorio</small>
+                                        <small style="visibility: hidden;" id="yearHelp" class="form-text text-danger">Campo numérico y obligatorio</small>
                                     </div>
 
                                 </div>
@@ -158,7 +161,7 @@
                                     <div class="col-md-2 mx-auto">
                                         <label>CVV</label>
                                         <input type="text" id="cvv" class="form-control" placeholder="CVV" required onchange="quitarError('cvvHelp')">
-                                        <small style="visibility: hidden;" id="cvvHelp" class="form-text text-danger">Campo alfanumérico y obligatorio</small>
+                                        <small style="visibility: hidden;" id="cvvHelp" class="form-text text-danger">Campo numérico(3) y obligatorio</small>
                                     </div>
                                 </div>
                                 <div class="modal-footer">

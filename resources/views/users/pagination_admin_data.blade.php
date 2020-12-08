@@ -15,8 +15,8 @@
             <th>Ciudad</th>
             <th>Perfil</th>
             <th>Unido</th>
-            <th></th>
-            <th></th>
+            <th>Borrar</th>
+            <th>Perfil</th>
         </tr>
 
         @foreach($data as $row)
@@ -36,13 +36,13 @@
             </td>
             <td>{{ $diff = Carbon\Carbon::parse($row->created_at)->diffForHumans(Carbon\Carbon::now()) }}</td>
 
-            <td><a href="{{ route('delete' , ['id' => $row->id]) }}"><i class="fa fa-trash" style="color:red"></i></a></td>
-            <td><a href="{{ route('profile' , ['id' => $row->id]) }}"><i class="fas fa-user-alt" style="color: black"></i></i></a></td>
+            <td class="icono"><a href="{{ route('delete' , ['id' => $row->id]) }}"><i class="fa fa-trash" style="color:red"></i></a></td>
+            <td class="icono"><a href="{{ route('profile' , ['id' => $row->id]) }}"><i class="fas fa-user-alt" style="color: black"></i></i></a></td>
         </tr>
         @endforeach
     </table>
     <div class="links">
-    <div colspan="3" class="col-sm-12">
+    <div colspan="3" class="col-sm-12 mt-4">
         {{ $data->links() }}
     </div>
 </div>

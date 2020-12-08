@@ -1,7 +1,7 @@
 @import "variables";
 
 
-.parent {
+.parent3 {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(4, 1fr);
@@ -9,7 +9,7 @@
     grid-row-gap: 0px;
     
     
-    .div1 { 
+    .div10 { 
         grid-column-start: 1;
         grid-column-end: 6;
         grid-row-start: 1;
@@ -25,7 +25,7 @@
         justify-content: center;
         align-items: center;
     }
-    .div2 { 
+    .div20 { 
         grid-column-start: 2;
         grid-column-end: 4;
         grid-row-start: 1;
@@ -48,7 +48,7 @@
             text-align: center;
         }
     }
-    .div3 { 
+    .div30 { 
         grid-column-start: 3;
         grid-column-end: 3;
         grid-row-start: 3;

@@ -8,15 +8,20 @@
         <div class="col-md-10">
             <div class="container">
                 <div class="row">
-                @if($show_pedido->count() > 0)
+                    @if($show_pedido->count() > 0)
                     <div id="invoice-POS">
-                        
+
                         <table>
                             <div style="display: none;">{{ $total = 0 }}</div>
                             <center id="top">
                                 <div class="logo"></div>
                                 <div class="info">
-                                    <h2>Detalle del pedido</h2>
+                                    @if($precio_reparto === 0)
+                                    <h2>Pedido sin entregar todavía</h2>
+                                    @else
+                                    <h2>El {{date('d/m/Y', strtotime($fecha))}} hiciste {{$precio_reparto}} pedidos</h2>
+                                    <small class="mb-2">Aquí tienes el resumen de todos ellos</small>
+                                    @endif
                                 </div>
                             </center>
                             <tr class="tabletitle">
@@ -37,7 +42,7 @@
                             <tr class="service">
                                 <td class="tableitem">
                                     <p class="itemtext" id="center">{{date('d-m-Y', strtotime($historial_user->fecha))}}</p>
-                                    
+
                                 </td>
                                 <td class="tableitem">
                                     <p class="itemtext">{{$historial_user->nombre}}</p>
@@ -60,7 +65,7 @@
                                 </td>
                                 <td class="tableitem text-center"><i class="fas fa-times itemtext"></i></td>
                                 <td class="tableitem">
-                                    <p class="itemtext" id="center">1.00€</p>
+                                    <p class="itemtext" id="center">{{number_format(($precio_reparto)*1,2)}}€</p>
                                 </td>
                             </tr>
                             <tr class="tabletitle">
@@ -87,6 +92,7 @@
 
                             </tr>
                         </table>
+
                         @else
                         <div class="alert alert-danger col-sm-5 mx-auto">
                             {{ ('No tienes ningún pedido este día') }}

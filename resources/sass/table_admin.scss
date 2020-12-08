@@ -1,0 +1,31 @@
+@import 'variables';
+
+.table_admin {
+    border-radius: 6px;
+    box-shadow: 2px 2px 2px 1px rgba(26, 25, 25, 0.596);
+    background-color: rgba(255, 255, 255, 0.7);
+    
+    th {
+        text-align: center;
+    }
+
+    td {
+        padding-left: 1%;
+    }
+
+    .icono {
+        text-align: center;
+    }
+
+    .center-table {
+        text-align: center;
+    }
+    
+}
+
+
+#pie-chart {
+    background: $transparent;
+    border-radius: 6px;
+    box-shadow: 2px 2px 2px 1px rgba(26, 25, 25, 0.596);
+}

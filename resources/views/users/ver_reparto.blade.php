@@ -4,17 +4,16 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <table class="col-md-12">
+        <table class="col-md-12 table_admin">
             <thead>
                 <tr>
-                    <th>Número de pedido</th>
                     <th>Nombre cliente</th>
                     <th>Dirección</th>
                     <th>Teléfono</th>
                     <th>Status pedido</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody  class="center-table">
                 <form method="POST" action="{{ route('repartido') }}">
                     @csrf
                     <!-- si no se pone da un error de que la página ha expirado -->
@@ -24,8 +23,6 @@
 
                 @foreach($reparto as $repartos)
                 <tr>
-
-                    <td> {{ $repartos->id }} </td>
                     <td> {{ $repartos->nombre }}</td>
                     <td> {{ $repartos->direccion}} </td>
                     <td> {{ $repartos->telefono }} </td>

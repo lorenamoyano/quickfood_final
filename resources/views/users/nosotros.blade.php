@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.footer')
 
 @section('content')
 
@@ -34,7 +34,7 @@
                             <img src="img/cafe.jpg" class="gallery__img" alt="Image 8">
                         </figure>
                     </div>
-                    <div class="col-sm-12 mx-auto">
+                    <div>
                         <video src="{{asset('video/video.mp4')}}" width=820 height=480 controls>
                             Lo sentimos. Este vídeo no puede ser reproducido en tu navegador.<br>
                             La versión descargable está disponible en <a href="URL">Enlace</a>.
@@ -42,15 +42,8 @@
                     </div>
                 </div>
             </div>
-            <h3><i class="fas fa-map-marker-alt"></i>Calle Marie Curie, 10 (Málaga)</h3>
-            <h5><i class="fas fa-phone-alt"></i>123-456-789</h5>
-            <hr>
-            <i class="fab fa-facebook-f" style="color:black"></i>
-            <i class="fab fa-twitter" style="color:black"></i>
-            <i class="fab fa-instagram" style="color:black"></i>
-            <i class="fab fa-youtube" style="color:black"></i>
+
         </div>
     </div>
 </div>
-
 @endsection
