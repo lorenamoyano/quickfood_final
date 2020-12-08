@@ -94,16 +94,3 @@ Route::get('/chart' , 'AdminController@chartJS')->name('chart')->middleware('aut
 Route::get('/admin', 'AdminController@admin_panel')->name('admin_panel1')->middleware('auth');
 Route::get('/admin_panel', 'PaginationController@index_admin')->name('administrador')->middleware('auth');
 Route::get('pagination/fetch_admin_data', 'PaginationController@fetch_admin_data')->name('fetch_admin_data')->middleware('auth');
-
-/**
- * API'S ROUTES
- */
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::get('productos/{api}', 'APIController@productos')->middleware('auth');
-Route::get('producto/{id}/{api}', 'APIController@producto')->middleware('auth');
-Route::get('clientes/{api}', 'APIController@usuarios')->middleware('auth');
-Route::get('cliente/{id}/{api}', 'APIController@usuario')->middleware('auth');

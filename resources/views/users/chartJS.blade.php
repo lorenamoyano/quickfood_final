@@ -18,7 +18,7 @@
         var data = {
             labels: cData.label,
             datasets: [{
-                label: "Usuarios",
+                label: "Compras",
                 data: cData.data,
                 backgroundColor: [
                     "#DEB887",

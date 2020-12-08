@@ -1,8 +1,10 @@
 <?php
 
+use App\Models\Carta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,3 +17,11 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
+Route::get('productos', 'ApiController@puestos');
+Route::get('producto/{id}', 'ApiController@producto');
+Route::get('clientes', 'ApiController@usuarios');
+Route::get('cliente/{id}', 'ApiController@usuario');
