@@ -1,0 +1,116 @@
+{
+	"info": {
+		"_postman_id": "1e5ad5d3-9ef5-47bb-893d-500a8e6b3749",
+		"name": "QuickFoodFinal",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://dggwkvjx.lucusprueba.es/public/api/cliente/10",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://dggwkvjx.lucusprueba.es/public/api/cliente/10",
+					"protocol": "http",
+					"host": [
+						"dggwkvjx",
+						"lucusprueba",
+						"es"
+					],
+					"path": [
+						"public",
+						"api",
+						"cliente",
+						"10"
+					]
+				},
+				"description": "View an user"
+			},
+			"response": []
+		},
+		{
+			"name": "http://dggwkvjx.lucusprueba.es/public/api/clientes",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://dggwkvjx.lucusprueba.es/public/api/clientes",
+					"protocol": "http",
+					"host": [
+						"dggwkvjx",
+						"lucusprueba",
+						"es"
+					],
+					"path": [
+						"public",
+						"api",
+						"clientes"
+					]
+				},
+				"description": "View all the users"
+			},
+			"response": []
+		},
+		{
+			"name": "http://dggwkvjx.lucusprueba.es/public/api/productos",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://dggwkvjx.lucusprueba.es/public/api/productos",
+					"protocol": "http",
+					"host": [
+						"dggwkvjx",
+						"lucusprueba",
+						"es"
+					],
+					"path": [
+						"public",
+						"api",
+						"productos"
+					]
+				},
+				"description": "View all the products"
+			},
+			"response": []
+		},
+		{
+			"name": "http://dggwkvjx.lucusprueba.es/public/api/producto/2",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://dggwkvjx.lucusprueba.es/public/api/producto/2",
+					"protocol": "http",
+					"host": [
+						"dggwkvjx",
+						"lucusprueba",
+						"es"
+					],
+					"path": [
+						"public",
+						"api",
+						"producto",
+						"2"
+					]
+				},
+				"description": "View a producto from the product's list"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
