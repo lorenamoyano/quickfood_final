@@ -9,6 +9,9 @@
 <p><strong>usuario cliente: amparo.casanova@gmail.com</strong></p>
 <p><strong>contraseña: Lorena.1991</strong></p>
 <hr>
+Enlace a la página: <a href="http://dggwkvjx.lucusprueba.es/public"></a>
+Enlace al vídeo: <a href="https://drive.google.com/file/d/1uuE4vixe1WR5avyoHKI1ZYY_gGRUrSWi/view">GDrive</a>
+<hr>
 
 <p>La aplicación ha sido realizada en Laravel. Se trata de un framework de PHP que se basa en una sintaxis elegante y expresiva para crear código de forma sencilla ya que se apoya en el Modelo-Vista-Controlador (MVC).</p>
 
