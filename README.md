@@ -9,7 +9,7 @@
 <p><strong>usuario cliente: amparo.casanova@gmail.com</strong></p>
 <p><strong>contraseña: Lorena.1991</strong></p>
 <hr>
-Enlace a la página: <a href="http://dggwkvjx.lucusprueba.es/public"></a>
+Enlace a la página: <a href="http://dggwkvjx.lucusprueba.es/public">Página</a><br>
 Enlace al vídeo: <a href="https://drive.google.com/file/d/1uuE4vixe1WR5avyoHKI1ZYY_gGRUrSWi/view">GDrive</a>
 <hr>
 
