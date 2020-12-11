@@ -150,7 +150,7 @@
         <div class="footer container-fluid">
     <h3><i class="fas fa-map-marker-alt"></i>Calle Marie Curie, 10 (Málaga)</h3>
     <h5><i class="fas fa-phone-alt"></i>123-456-789</h5>
-    <h6 style="text-align: center;">quickfood@quickfood</h6>
+    <h6 style="text-align: center;">quickfood@quickfood.com</h6>
     
 
     <div class="icon-centrado">
