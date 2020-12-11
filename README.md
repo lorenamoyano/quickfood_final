@@ -1,61 +1,42 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+<h1>QUICKFOOD</h1>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
+<p><strong>usuario adminisitrador: lorenamoyanomontes1991@gmail.com</strong></p>
+<p><strong>contraseña: Lorena.1991</strong></p>
+
+<p><strong>usuario repartidor: ivelazquez@yahoo.es</strong></p>
+<p><strong>contraseña: Lorena.1991</strong></p>
+
+<p><strong>usuario cliente: amparo.casanova@gmail.com</strong></p>
+<p><strong>contraseña: Lorena.1991</strong></p>
+<hr>
+
+<p>La aplicación ha sido realizada en Laravel. Se trata de un framework de PHP que se basa en una sintaxis elegante y expresiva para crear código de forma sencilla ya que se apoya en el Modelo-Vista-Controlador (MVC).</p>
+
+<hr>
+
+<p>La aplicación tiene una temática de un resturante de comida rápida. Dada la situación actual, se hace más necesario que nunca contar con un sistema que haga que los clientes puedan realizar pedidos de forma simultánea, a diferencia de lo ocurriría con una llamada telefónica. El cliente podrá realizar el pedido, pagarlo desde casa y que se lo lleven sin tener que desplazarse.</p>
+<p>La aplicación cuenta con <strong>tres tipos de perfiles</strong>:
+    <ol>
+        <li>El <strong>administrador</strong> tiene un completo manejo de la aplicación con la única diferencia de que no puede comprar desde su cuenta pero puede hacer las siguientes funciones
+            <ul>
+                <li>Añadir, eliminar o editar un producto</li>
+                <li>Ver la tabla de usuarios registrados en la aplicación</li>
+                <li>Eliminar usuarios</li>
+                <li>Ver en una gráfica el número total de pedidos realizados por cada usuario</li>
+            </ul></li>
+        <li>El <strong>cliente o usuario registrado</strong> puede acceder al sistema de compras de la aplicación. Para acceder, en primer lugar, necesita una cuenta para iniciar sesión con ella. Hecho esto, sus funcionalidades son las siguientes:
+            <ul>
+                <li>Añadir o eliminar un producto del carrito</li>
+                <li>Ver su perfil</li>
+                <li>Buscar su historial de pedidos</li>
+            </ul></li>
+        <li>El <strong>repartidor</strong> es, junto con el usuario no registrado, el que menos funcionalidades tiene en la aplicación.
+            <ul>
+                <li>Marcar un pedido como entregado</li>
+                <li>Ver la carta de productos</li>
+            </ul></li>
+    </ol>
+    <p>Además de estos tres perfiles, existe el del <strong>usuario no registrado</strong> que sólo puede acceder a la parte de contacto de la aplicación y a ver la carta de productos sin poder llegar a realizar un pedido.</p>
+
+<p>La aplicación, además de en Laravel, también ha sido realizada en JavaScript para ciertas partes del código como son la validación de formularios, añadir sonidos cuando ocurra un evento, etc.</p>
 </p>
-
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
