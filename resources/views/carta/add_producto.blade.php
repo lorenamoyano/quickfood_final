@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-@if(Auth::user() && Auth::user()->perfil == "admin")
+@if(Auth::user() && Auth::user()->perfil == 1)
 
 
 <div class="container">
@@ -47,6 +47,24 @@
 
                             <div class="col-md-6">
                                 <input id="descripcion" type="text" class="form-control @error('descripcion') is-invalid @enderror" name="descripcion" value="{{ old('descripcion') }}" required autocomplete="name" autofocus>
+
+                                @error('descripcion')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="alergeno" class="col-md-4 col-form-label text-md-right">{{ __('Alérgeno') }}</label>
+
+                            <div class="col-md-6">
+                                <select id="alergeno" name="alergeno">
+                                    @foreach ($alergeno as $aler)
+                                    <option value="{{$aler->id}}" name="alergeno">{{$aler->nombre}}</option>
+                                    @endforeach
+                                </select>
 
                                 @error('descripcion')
                                 <span class="invalid-feedback" role="alert">

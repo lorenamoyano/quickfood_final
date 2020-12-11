@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Alergenos_carta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Cliente;
@@ -62,7 +63,9 @@ class AdminController extends Controller
      */
     public function anadir()
     {
-        return view('carta.add_producto');
+        $alergeno = DB::table('alergenos')->get();
+        return view('carta.add_producto' , ['alergeno' => $alergeno]);
+        //return view('carta.add_producto');
     }
 
     /**
@@ -78,19 +81,26 @@ class AdminController extends Controller
             'nombre' => ['required', 'string'],
             'precio' => ['required', 'numeric'],
             'descripcion' => ['required', 'string'],
+            'alergeno' => ['required' , 'string'],
         ]);
 
         $nombre = $data->input('nombre');
         $precio = $data->input('precio');
         $descripcion = $data->input('descripcion');
-
+        $alergeno = $data->input('alergeno');
         Carta::create([
             'nombre' => $nombre,
             'precio' => $precio,
             'descripcion' => $descripcion,
         ]);
+        $last = DB::table('carta')->select('id')->latest()->first();
+        Alergenos_carta::create([
+            'idCarta' => $last->id,
+            'idAlergeno' => $alergeno,
+        ]);
         return redirect()->route('ver');
     }
+
 
     /**
      * Delete a product to the database
@@ -155,10 +165,10 @@ class AdminController extends Controller
 
     public function chartJS()
     {
-        $record = DB::table('compra')
-            ->join('cliente', 'cliente.id', '=', 'compra.idClien')
+        $record = DB::table('comprar')
+            ->join('cliente', 'cliente.id', '=', 'comprar.idClien')
             ->select(DB::raw('count(*) as total'), 'cliente.nombre')
-            ->groupBy('compra.idClien', 'cliente.nombre')
+            ->groupBy('comprar.idClien', 'cliente.nombre')
             ->get();
 
         $data = [];

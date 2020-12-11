@@ -10,7 +10,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pedido;
-use App\Models\Compra;
+use App\Models\Comprar;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -41,6 +41,7 @@ class PedidoController extends Controller
             Pedido::create([
                 'idCliente' => Auth::user()->id,
                 'idCar' => $id,
+                'pago' => 0,
                 'cantidad' => $cantidad,
                 'fecha' => $fecha,
             ]);
@@ -52,7 +53,6 @@ class PedidoController extends Controller
         return redirect()->route('ver',['id' => $id]) ;
         
     }
-
 
     /**
      * Delete a product from the shopping cart
@@ -104,7 +104,7 @@ class PedidoController extends Controller
                                         ->get();
 
         
-        $precio_reparto = DB::table('compra')->where('idClien' , '=' , $id)
+        $precio_reparto = DB::table('comprar')->where('idClien' , '=' , $id)
                                             ->where('repartido' , '=' , '1')
                                             ->whereDate('created_at' , '=' , $fecha)
                                             ->count();
@@ -126,9 +126,10 @@ class PedidoController extends Controller
             'direccion' => ['required' , 'string']
         ]) ;
         $direccion = $request->input('direccion');
-        $comprar = Compra::create([
+        $comprar = Comprar::create([
                 'idClien' => $id,
                 'direccion' => $direccion,
+                'repartido' => 0,
             ]);
         $pagado = DB::table('pedido')->select('pago')
                                     ->where('idCliente' , '=' , $id)
@@ -148,8 +149,8 @@ class PedidoController extends Controller
 
     public function ver_reparto() {
         $id = Auth::user()->id;
-        $reparto = DB::table('compra')->join('cliente' , 'cliente.id' , '=' , 'compra.idClien')
-                                      ->select('repartido' , 'cliente.nombre' , 'compra.idClien' , 'compra.id' , 'compra.direccion' , 'cliente.telefono')
+        $reparto = DB::table('comprar')->join('cliente' , 'cliente.id' , '=' , 'comprar.idClien')
+                                      ->select('repartido' , 'cliente.nombre' , 'comprar.idClien' , 'comprar.id' , 'comprar.direccion' , 'cliente.telefono')
                                       ->where('repartido' , '=' , '0')
                                       ->get();
         return view('users.ver_reparto',['reparto' => $reparto]);
@@ -158,7 +159,7 @@ class PedidoController extends Controller
     /**
      * Change the database's column "repartido" from false to true
      * 
-     * @param req compra.id , compra.repartido
+     * @param req comprar.id , comprar.repartido
      * @return view ver_reparto
      */
 
@@ -170,9 +171,9 @@ class PedidoController extends Controller
 
         $id = $request->input('id');
         $repartido = $request->input('repartido');
-        $repartido = DB::table('compra')->where('id' , $id)->update(['repartido' => '1']);
-        $reparto = DB::table('compra')->join('cliente' , 'cliente.id' , '=' , 'compra.idClien')
-                                      ->select('repartido' , 'cliente.nombre' , 'compra.id' , 'compra.direccion' , 'cliente.telefono', 'compra.idClien')
+        $repartido = DB::table('comprar')->where('id' , $id)->update(['repartido' => '1']);
+        $reparto = DB::table('comprar')->join('cliente' , 'cliente.id' , '=' , 'comprar.idClien')
+                                      ->select('repartido' , 'cliente.nombre' , 'comprar.id' , 'comprar.direccion' , 'cliente.telefono', 'comprar.idClien')
                                       ->where('repartido' , '=' , '0')
                                       ->get();
         return view('users.ver_reparto',['reparto' => $reparto]);

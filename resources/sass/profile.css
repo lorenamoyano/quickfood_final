@@ -19,7 +19,8 @@
 }
 
 .parent .div1 img {
-  width: 300px;
+  max-width: 300px;
+  max-height: 200px;
   margin-left: 10px;
 }
 

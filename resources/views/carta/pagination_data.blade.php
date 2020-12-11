@@ -1,4 +1,4 @@
-@if (Auth::user() && Auth::user()->perfil=="admin")
+@if (Auth::user() && Auth::user()->perfil==1)
 <a href="{{ route('anadir') }}" class="btn btn-success"><i class="fas fa-plus-square"></i> Añadir</a>
 @endif
 <div class="container" id="contenedor"></div>
@@ -32,10 +32,12 @@
                             <h5>{{$cartas->nombre}}</h5>
                             <h6>{{$cartas->descripcion}}</h6>
                             <h6>{{number_format ($cartas->precio,2) }}€</h6>
+                            <hr>
+                            <a href="{{route('alergenos' , ['id' => $cartas->id])}}">Tabla de alérgenos</a>
                         </div>
                         <div class="modal-footer">
-                            
-                            @if(Auth::user() && Auth::user()->perfil=="admin")
+
+                            @if(Auth::user() && Auth::user()->perfil==1)
                             <a type="button" data-dismiss="modal"><i class="fas fa-arrow-left"></i></a>
                             <a href="{{route('product.update' , ['id' =>$cartas->id])}}"><i class="fas fa-edit"></i></a>
                             <a href=""></a>
@@ -44,9 +46,9 @@
                             @endif
 
 
-                            @if(Auth::user() && Auth::user()->perfil=="user")
+                            @if(Auth::user() && Auth::user()->perfil==2)
                             <form method="POST" action="{{ route('producto.add', ['id' => $cartas->id]) }}">
-                            @csrf
+                                @csrf
                                 <label for="cantidad">¿Cuántas unidades desea?</label>
                                 <input class="cantidad col-sm-12 mb-2" type="number" class="form-control" name="cantidad" value="1" min="1">
                                 <input type="hidden" name="fecha" value="{{ $diff = Carbon\Carbon::parse(Carbon\Carbon::now()->toDateString())}}" />

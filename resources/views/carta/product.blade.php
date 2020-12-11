@@ -18,11 +18,11 @@
                 </div>
             </div>
         </div>
-        @if(Auth::user() && Auth::user()->perfil=="admin")
+        @if(Auth::user() && Auth::user()->perfil==1)
             <a href="" class="btn btn-primary">Editar</a>
             <a href="" class="btn btn-danger">Borrar</a>
         @endif
-        @if(Auth::user() && Auth::user()->perfil=="user")
+        @if(Auth::user() && Auth::user()->perfil==2)
             <a href="" class="btn btn-success">Pedir</a>
         @endif
         <!-- PAGINACION -->

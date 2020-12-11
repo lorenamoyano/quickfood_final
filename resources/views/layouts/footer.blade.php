@@ -92,13 +92,13 @@
                     <li>
                         
 
-                        @if (Auth::user()->perfil === 'user')
+                        @if (Auth::user()->perfil === 2)
                         <a class="dropdown-item" href="{{ route('pedido.pagar' , ['id' => Auth::user()->id]) }}">
                             <i class="fas fa-shopping-basket" style="color:black"></i>
                         </a>
                         @endif
 
-                        @if (Auth::user()->perfil === 'repartidor')
+                        @if (Auth::user()->perfil === 3)
                         <a class="dropdown-item" href="{{ route('ver_reparto' , ['id' => Auth::user()->id]) }}">
                             <i class="fas fa-motorcycle" style="color:black"></i>
                         </a>
@@ -113,7 +113,7 @@
                 <ul class="navbar-nav ml-auto">
                     <!-- Authentication Links -->
                     
-                    @if (Auth::user()->perfil === 'admin')
+                    @if (Auth::user()->perfil === 1)
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{ __('Administración') }}
@@ -150,6 +150,8 @@
         <div class="footer container-fluid">
     <h3><i class="fas fa-map-marker-alt"></i>Calle Marie Curie, 10 (Málaga)</h3>
     <h5><i class="fas fa-phone-alt"></i>123-456-789</h5>
+    <h6 style="text-align: center;">quickfood@quickfood</h6>
+    
 
     <div class="icon-centrado">
     <i class="fab fa-facebook-f icon-center" style="color:black"></i>

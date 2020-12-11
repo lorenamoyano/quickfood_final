@@ -16,7 +16,6 @@
             <th>Perfil</th>
             <th>Unido</th>
             <th>Borrar</th>
-            <th>Perfil</th>
         </tr>
 
         @foreach($data as $row)
@@ -29,16 +28,15 @@
             <td> {{ $row->ciudad }} </td>
             <td>
                 <select class="custom-select" id="{{ $row->id }}" data-id="{{ $row->id }}">
-                    <option value="admin"> Administrador </option>
-                    <option value="repartidor" @if( $row->perfil == "repartidor") selected @endif > Repartidor </option>
-                    <option value="user" @if( $row->perfil == "user") selected @endif > Cliente </option>
+                    <option value="1"> Administrador </option>
+                    <option value="3" @if( $row->perfil == 3) selected @endif > Repartidor </option>
+                    <option value="2" @if( $row->perfil == 2) selected @endif > Cliente </option>
                 </select>
             </td>
             <td>{{ $diff = Carbon\Carbon::parse($row->created_at)->diffForHumans(Carbon\Carbon::now()) }}</td>
 
             <td class="icono"><a href="{{ route('delete' , ['id' => $row->id]) }}"><i class="fa fa-trash" style="color:red"></i></a></td>
-            <td class="icono"><a href="{{ route('profile' , ['id' => $row->id]) }}"><i class="fas fa-user-alt" style="color: black"></i></i></a></td>
-        </tr>
+            </tr>
         @endforeach
     </table>
     <div class="links">

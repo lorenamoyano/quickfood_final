@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-@if(@guest || Auth::user()->perfil == "admin")
+@if(@guest || Auth::user()->perfil == 1)
 <div class="container-fluid">
     <div class="row justify-content-center">
         <!--Buscador -->

@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="profile mx-auto">
-            @if(Auth::user() && Auth::user()->id == $user->id || Auth::user()->perfil == "admin")
+            @if(Auth::user() && Auth::user()->id == $user->id)
             @if (session('status'))
             <div class="alert alert-success" role="alert">
                 {{ session('status') }}
@@ -39,7 +39,7 @@
                         </tr>
                     </table>
                 </div>
-                @if(Auth::user()->perfil === "user")
+                @if(Auth::user()->perfil === 2)
                 <div class="div4">
                     <form action="{{route('show_pedido')}}" method="post">
                         @csrf

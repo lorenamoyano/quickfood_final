@@ -67,6 +67,7 @@ Route::get('pagination/fetch_data', 'PaginationController@fetch_data')->name('fe
  * CARD'S MENU
  */
 Route::get('/ver',  'CartaController@ver')->name('ver');
+Route::get('/alergenos/{id}' , 'CartaController@alergenos')->name('alergenos');
 
 /**
  * ORDER'S ROUTES

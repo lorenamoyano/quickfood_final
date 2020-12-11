@@ -81,8 +81,8 @@ class RegisterController extends Controller
             'telefono' => $data['telefono'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'api_token' => sha1(time()),
             'ciudad' => $data['ciudad'],
+            'perfil'   => 2
         ]);
     }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-@if(@guest || Auth::user()->perfil != "repartidor")
+@if(@guest || Auth::user()->perfil != 3)
 <div class="container-fluid">
     <div class="row justify-content-center">
         <!--Buscador -->

@@ -2,7 +2,7 @@
 
 @section('content')
 
-@if (Auth::user()->perfil != "admin")
+@if (Auth::user()->perfil != 1)
 <div class="container" id="contenedor">
     <div class="row justify-content-center">
         <div class="col-md-10">

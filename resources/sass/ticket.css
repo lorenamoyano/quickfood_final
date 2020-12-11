@@ -50,7 +50,7 @@
 #invoice-POS #top .logo {
   height: 100px;
   width: 100px;
-  background: url("http://localhost/quickfood/quickfood/public/img/dibujo.svg") no-repeat;
+  background: url("../../public/img/dibujo.png") no-repeat;
   background-size: 100px 100px;
 }
 
